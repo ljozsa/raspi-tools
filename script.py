@@ -37,7 +37,6 @@ time.strftime("%Y-%m-%d-%H:00", lt)))
 
         call(["/usr/local/bin/epeg", "-w", "160", "-h", "120", "-q", "75",
 full_path + '/' + precise_time + ".jpg", "/tmp/temp.jpg"])
-])
         call(["/usr/bin/convert", "/tmp/temp.jpg", "-pointsize", "9", "-fill",
 "white", "-annotate", "+10+20", "/".join(spl) + "/" + precise_time + ".jpg" ])
         base_path = path
