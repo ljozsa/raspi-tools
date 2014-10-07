@@ -18,10 +18,7 @@ while(True):
                 os.makedirs(full_path)
         precise_time = time.strftime("%Y-%m-%d-%H:%M:%S", lt)
         call(["/usr/bin/raspistill", "-w", "720", "-h", "540", 
-"-o", "/tmp/temp.jpg"])
-        call(["/usr/bin/convert", "/tmp/temp.jpg", "-pointsize", "9", "-fill",
-"white", "-annotate", "+10+20", precise_time, full_path + "/" + precise_time +
-".jpg"])
+"-o", precise_time, full_path + "/" + precise_time + ".jpg"])
         spl = path.split('/')
         if spl[-1] == '':
             spl.pop()
@@ -34,15 +31,17 @@ time.strftime("%Y-%m-%d-%H:00", lt)))
 
         if append_blank == True:
             spl.append('')
-        
+
         if not os.path.exists("/".join(spl)):
             os.makedirs("/".join(spl))
 
         call(["/usr/local/bin/epeg", "-w", "160", "-h", "120", "-q", "75",
-full_path + '/' + precise_time + ".jpg", "/".join(spl) + "/" + precise_time +
-".jpg"])
+full_path + '/' + precise_time + ".jpg", "/tmp/temp.jpg"])
+])
+        call(["/usr/bin/convert", "/tmp/temp.jpg", "-pointsize", "9", "-fill",
+"white", "-annotate", "+10+20", "/".join(spl) + "/" + precise_time + ".jpg" ])
         base_path = path
-        base_path = path.rstrip('/').split('/') 
+        base_path = path.rstrip('/').split('/')
         base_path.pop()
         call(["/usr/bin/chown", "-R", "apache.apache", "/".join(base_path)])
 
