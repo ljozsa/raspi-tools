@@ -18,7 +18,7 @@ while(True):
                 os.makedirs(full_path)
         precise_time = time.strftime("%Y-%m-%d-%H:%M:%S", lt)
         call(["/usr/bin/raspistill", "-w", "720", "-h", "540", 
-"-o", precise_time, full_path + "/" + precise_time + ".jpg"])
+"-o", full_path + "/" + precise_time + ".jpg"])
         spl = path.split('/')
         if spl[-1] == '':
             spl.pop()
