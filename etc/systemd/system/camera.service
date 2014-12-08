@@ -1,0 +1,11 @@
+[Unit]
+Description=raspi camera
+After=network-online.target
+Requires=network-online.target
+
+[Service]
+ExecStart=/root/raspi-tools/script.py /var/www/html/vratnice
+
+[Install]
+WantedBy=multi-user.target
+
