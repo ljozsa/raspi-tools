@@ -2,6 +2,7 @@
 import os, sys, time
 from subprocess import call
  
+time.sleep(20)
 shot_in_sec = [0, 30]
 lt = time.localtime()
 path = sys.argv[1] 
@@ -17,7 +18,7 @@ while(True):
             if not os.path.exists(full_path):
                 os.makedirs(full_path)
         precise_time = time.strftime("%Y-%m-%d-%H:%M:%S", lt)
-        call(["/usr/bin/raspistill", "-w", "720", "-h", "540", 
+        call(["/usr/bin/raspistill", "-w", "720", "-h", "540", "-vf", "-hf",
 "-o", full_path + "/" + precise_time + ".jpg"])
         spl = path.split('/')
         if spl[-1] == '':
@@ -36,14 +37,14 @@ time.strftime("%Y-%m-%d-%H:00", lt)))
             os.makedirs("/".join(spl))
 
         call(["/usr/local/bin/epeg", "-w", "160", "-h", "120", "-q", "75",
-full_path + '/' + precise_time + ".jpg", "/tmp/temp.jpg"])
-        call(["/usr/bin/convert", "/tmp/temp.jpg", "-pointsize", "9", "-fill",
+full_path + '/' + precise_time + ".jpg", "/run/temp.jpg"])
+        call(["/usr/bin/convert", "/run/temp.jpg", "-pointsize", "9", "-fill",
 "white", "-annotate", "+0+120", precise_time, "/".join(spl) + "/" +
 precise_time + ".jpg" ])
         base_path = path
         base_path = path.rstrip('/').split('/')
         base_path.pop()
-        call(["/usr/bin/chown", "-R", "apache.apache", "/".join(base_path)])
+        call(["/bin/chown", "-R", "www-data.www-data", "/".join(base_path)])
 
         time.sleep(1)
 
