@@ -1,50 +1,89 @@
 #!/usr/bin/python
-import os, sys, time
+import os, sys, time, requests, pytz
 from subprocess import call
+from datetime import datetime
  
-time.sleep(20)
-shot_in_sec = [0, 30]
-lt = time.localtime()
+shot_in_sec = [0]
+brn_lat = '49.2000'
+brn_lon = '16.6167'
+brn_tz = pytz.timezone('Europe/Prague')
+utc_tz = pytz.timezone('UTC')
+
+def get_sun(lat, lon):
+    return requests.get('http://api.sunrise-sunset.org/json?lat=' + lat + '&lng=' + lon + '=&formatted=0')
+
+def get_localized_time(time, tz): #time in format '%Y-%m-%dT%H:%M:%S+00:00'
+    time_naive = datetime.strptime(time, '%Y-%m-%dT%H:%M:%S+00:00')
+    return tz.localize(time_naive)
+
+def get_localized_time_now(tz):
+    return tz.localize(datetime.now())
+
+
+def get_cam_on_off(request):
+    if r.json()['status'] == 'OK':
+        civil_twilight_begin = r.json()['results']['civil_twilight_begin']
+        civil_twilight_end = r.json()['results']['civil_twilight_end']
+        cam_on = get_localized_time(civil_twilight_begin, utc_tz)
+        cam_off = get_localized_time(civil_twilight_end, utc_tz)
+    else:
+	time_now = get_localized_time_now(utc_tz)
+        cam_on = time_now.replace(hour=3, minute=0, second=0, microsecond=0)
+        cam_off = time_now.replace(hour=20, minute=0, second=0, microsecond=0)
+    return cam_on, cam_off
+
+time.sleep(20)  # allow chrony to sync
+lt = get_localized_time_now(brn_tz)
 path = sys.argv[1] 
-full_path = path + '/' + time.strftime("%Y-%m-%d-%H:00", lt)
+full_path = path + '/' + datetime.strftime(lt, "%Y-%m-%d-%H:00")
+
+
 if not os.path.exists(full_path):
     os.makedirs(full_path)
+
+r = get_sun(brn_lat, brn_lon)
+cam_on, cam_off = get_cam_on_off(r)
      
 while(True):
-    lt = time.localtime()
-    if lt.tm_sec in shot_in_sec:
-        if lt.tm_min == 0 and lt.tm_sec == 0:
-            full_path = path + '/' + time.strftime("%Y-%m-%d-%H:%M", lt) 
-            if not os.path.exists(full_path):
-                os.makedirs(full_path)
-        precise_time = time.strftime("%Y-%m-%d-%H:%M:%S", lt)
-        call(["/usr/bin/raspistill", "-w", "720", "-h", "540", "-vf", "-hf",
-"-o", full_path + "/" + precise_time + ".jpg"])
-        spl = path.split('/')
-        if spl[-1] == '':
-            spl.pop()
-            append_blank = True
-        else:
-            append_blank = False
-        last = spl.pop()
-        spl.extend(('_sfpg_data', 'thumb', last, 
-time.strftime("%Y-%m-%d-%H:00", lt)))
+    lt = get_localized_time_now(brn_tz)
+    if cam_on < lt and lt < cam_off:
+        if lt.second in shot_in_sec:
+            if lt.minute == 0 and lt.second == 0:
+                full_path = path + '/' + datetime.strftime(lt, "%Y-%m-%d-%H:%M")
+                if not os.path.exists(full_path):
+                    os.makedirs(full_path)
+            precise_time = datetime.strftime(lt, "%Y-%m-%d-%H:%M:%S")
+            call(["/usr/bin/raspistill", "-w", "720", "-h", "540", "-vf", "-hf",
+    "-o", full_path + "/" + precise_time + ".jpg"])
+            spl = path.split('/')
+            if spl[-1] == '':
+                spl.pop()
+                append_blank = True
+            else:
+                append_blank = False
+            last = spl.pop()
+            spl.extend(('_sfpg_data', 'thumb', last,
+    datetime.strftime(lt, "%Y-%m-%d-%H:00")))
 
-        if append_blank == True:
-            spl.append('')
+            if append_blank == True:
+                spl.append('')
 
-        if not os.path.exists("/".join(spl)):
-            os.makedirs("/".join(spl))
+            if not os.path.exists("/".join(spl)):
+                os.makedirs("/".join(spl))
 
-        call(["/usr/local/bin/epeg", "-w", "160", "-h", "120", "-q", "75",
-full_path + '/' + precise_time + ".jpg", "/run/temp.jpg"])
-        call(["/usr/bin/convert", "/run/temp.jpg", "-pointsize", "9", "-fill",
-"white", "-annotate", "+0+120", precise_time, "/".join(spl) + "/" +
-precise_time + ".jpg" ])
-        base_path = path
-        base_path = path.rstrip('/').split('/')
-        base_path.pop()
-        call(["/bin/chown", "-R", "www-data.www-data", "/".join(base_path)])
+            call(["/usr/local/bin/epeg", "-w", "160", "-h", "120", "-q", "75",
+    full_path + '/' + precise_time + ".jpg", "/run/temp.jpg"])
+            call(["/usr/bin/convert", "/run/temp.jpg", "-pointsize", "9", "-fill",
+    "white", "-annotate", "+0+120", precise_time, "/".join(spl) + "/" +
+    precise_time + ".jpg" ])
+            base_path = path
+            base_path = path.rstrip('/').split('/')
+            base_path.pop()
+            call(["/bin/chown", "-R", "www-data.www-data", "/".join(base_path)])
 
-        time.sleep(1)
+    time.sleep(1)
+    if lt.day != datetime.today().day: #update sunrise and sunset
+        r = get_sun(brn_lat, brn_lon)
+        cam_on, cam_off = get_cam_on_off(r)
 
+# vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
