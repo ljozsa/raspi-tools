@@ -37,10 +37,6 @@ lt = get_localized_time_now(brn_tz)
 path = sys.argv[1] 
 full_path = path + '/' + datetime.strftime(lt, "%Y-%m-%d-%H:00")
 
-
-if not os.path.exists(full_path):
-    os.makedirs(full_path)
-
 r = get_sun(brn_lat, brn_lon)
 cam_on, cam_off = get_cam_on_off(r)
 sun_updated = False
@@ -49,6 +45,8 @@ while(True):
     lt = get_localized_time_now(brn_tz)
     if cam_on < lt and lt < cam_off:
         if lt.second in shot_in_sec:
+            if not os.path.exists(full_path):
+                os.makedirs(full_path)
             if lt.minute == 0 and lt.second == 0:
                 full_path = path + '/' + datetime.strftime(lt, "%Y-%m-%d-%H:%M")
                 if not os.path.exists(full_path):
