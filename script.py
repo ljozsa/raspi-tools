@@ -43,6 +43,7 @@ if not os.path.exists(full_path):
 
 r = get_sun(brn_lat, brn_lon)
 cam_on, cam_off = get_cam_on_off(r)
+sun_updated = False
      
 while(True):
     lt = get_localized_time_now(brn_tz)
@@ -55,6 +56,8 @@ while(True):
             precise_time = datetime.strftime(lt, "%Y-%m-%d-%H:%M:%S")
             call(["/usr/bin/raspistill", "-w", "720", "-h", "540", "-vf", "-hf",
     "-o", full_path + "/" + precise_time + ".jpg"])
+            call(["/usr/local/bin/epeg", "-w", "640", "-h", "480", "-q", "90",
+    full_path + '/' + precise_time + ".jpg", "/tmp/hangar.jpg"])
             spl = path.split('/')
             if spl[-1] == '':
                 spl.pop()
@@ -82,8 +85,12 @@ while(True):
             call(["/bin/chown", "-R", "www-data.www-data", "/".join(base_path)])
 
     time.sleep(1)
-    if lt.day != datetime.today().day: #update sunrise and sunset
+    if lt.hour == 0 and lt.minute == 0 and sun_updated == False:
         r = get_sun(brn_lat, brn_lon)
         cam_on, cam_off = get_cam_on_off(r)
+        sun_updated = True
+    elif  lt.hour != 0:
+        sun_updated = False
+
 
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
