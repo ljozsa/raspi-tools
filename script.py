@@ -43,14 +43,12 @@ sun_updated = False
      
 while(True):
     lt = get_localized_time_now(brn_tz)
+    fd = open('/tmp/cam_onoff','w')
     if cam_on < lt and lt < cam_off:
         if lt.second in shot_in_sec:
+            full_path = path + '/' + datetime.strftime(lt, "%Y-%m-%d-%H:00")
             if not os.path.exists(full_path):
                 os.makedirs(full_path)
-            if lt.minute == 0 and lt.second == 0:
-                full_path = path + '/' + datetime.strftime(lt, "%Y-%m-%d-%H:%M")
-                if not os.path.exists(full_path):
-                    os.makedirs(full_path)
             precise_time = datetime.strftime(lt, "%Y-%m-%d-%H:%M:%S")
             call(["/usr/bin/raspistill", "-w", "720", "-h", "540", "-vf", "-hf",
     "-o", full_path + "/" + precise_time + ".jpg"])
@@ -83,7 +81,7 @@ while(True):
             call(["/bin/chown", "-R", "www-data.www-data", "/".join(base_path)])
 
     time.sleep(1)
-    if lt.hour == 0 and lt.minute == 0 and sun_updated == False:
+    if lt.hour == 3 and lt.minute == 0 and sun_updated == False:
         r = get_sun(brn_lat, brn_lon)
         cam_on, cam_off = get_cam_on_off(r)
         sun_updated = True
