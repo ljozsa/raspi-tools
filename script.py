@@ -74,9 +74,9 @@ while(True):
     full_path + '/' + precise_time + ".jpg", "/run/temp.jpg"])
 
 			# create transparent canvas and add time there
-            call(["/usr/bin/convert", "-size", "160x120", "canvas:none", 
-			 "-undercolor", "black", "-pointsize", "9", "-fill", "white", 
-			 "-gravity", "NorthEast", "-annotate", "0", precise_time, 
+            call(["/usr/bin/convert", "-size", "160x120", "canvas:none",
+			 "-undercolor", "black", "-pointsize", "9", "-fill", "white",
+			 "-gravity", "NorthEast", "-annotate", "0", precise_time,
 			 "/tmp/canvas.gif" ])
 
 			# join canvas and image thumbnail
