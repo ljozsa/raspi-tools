@@ -73,15 +73,15 @@ while(True):
             call(["/usr/local/bin/epeg", "-w", "160", "-h", "120", "-q", "75",
     full_path + '/' + precise_time + ".jpg", "/run/temp.jpg"])
 
-			# create transparent canvas and add time there
+            # create transparent canvas and add time there
             call(["/usr/bin/convert", "-size", "160x120", "canvas:none",
-			 "-undercolor", "black", "-pointsize", "9", "-fill", "white",
-			 "-gravity", "NorthEast", "-annotate", "0", precise_time,
-			 "/tmp/canvas.gif" ])
+             "-undercolor", "black", "-pointsize", "9", "-fill", "white",
+             "-gravity", "NorthEast", "-annotate", "0", precise_time,
+             "/tmp/canvas.gif" ])
 
-			# join canvas and image thumbnail
-			call(["/usr/bin/convert", "/tmp/canvas.gif", "-flatten", 
-			 "/".join(spl) + "/" + precise_time + ".jpg" ])
+            # join canvas and image thumbnail
+            call(["/usr/bin/convert", "/tmp/canvas.gif", "-flatten",
+             "/".join(spl) + "/" + precise_time + ".jpg" ])
             base_path = path
             base_path = path.rstrip('/').split('/')
             base_path.pop()
