@@ -87,6 +87,10 @@ while(True):
             base_path.pop()
             call(["/bin/chown", "-R", "www-data.www-data", "/".join(base_path)])
 
+            # create animated gif and place it to the galery root
+            call(["/usr/bin/convert", "/".join(spl) + "/*.jpg", 
+             full_path + "/_dir.gif" ])
+
     time.sleep(1)
     if lt.hour == 3 and lt.minute == 0 and sun_updated == False:
         r = get_sun(brn_lat, brn_lon)
