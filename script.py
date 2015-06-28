@@ -80,7 +80,7 @@ while(True):
              "/tmp/canvas.gif" ])
 
             # join canvas and image thumbnail
-            call(["/usr/bin/convert", "/tmp/canvas.gif", "-flatten",
+            call(["/usr/bin/composite", "/tmp/canvas.gif", "/run/temp.jpg",
              "/".join(spl) + "/" + precise_time + ".jpg" ])
             base_path = path
             base_path = path.rstrip('/').split('/')
