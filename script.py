@@ -2,6 +2,7 @@
 import os, sys, time, requests, pytz
 from subprocess import call
 from datetime import datetime
+from glob import glob
  
 shot_in_sec = [0]
 brn_lat = '49.2000'
@@ -43,7 +44,6 @@ sun_updated = False
      
 while(True):
     lt = get_localized_time_now(brn_tz)
-    fd = open('/tmp/cam_onoff','w')
     if cam_on < lt and lt < cam_off:
         if lt.second in shot_in_sec:
             full_path = path + '/' + datetime.strftime(lt, "%Y-%m-%d-%H:00")
@@ -88,8 +88,10 @@ while(True):
             call(["/bin/chown", "-R", "www-data.www-data", "/".join(base_path)])
 
             # create animated gif and place it to the galery root
-            call(["/usr/bin/convert", "/".join(spl) + "/*.jpg", 
-             full_path + "/_dir.gif" ])
+            jpeg_list = glob("/".join(spl) + "/*.jpg")
+            jpeg_list.append(full_path + "/_dir.gif")
+            jpeg_list.insert(0,"/usr/bin/convert")
+            call(jpeg_list)
 
     time.sleep(1)
     if lt.hour == 3 and lt.minute == 0 and sun_updated == False:
