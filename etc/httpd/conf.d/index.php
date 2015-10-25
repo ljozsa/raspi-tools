@@ -2,12 +2,12 @@
 
 	/*
 
-		Single File PHP Gallery 4.3.0 (SFPG)
+		Single File PHP Gallery 4.5.6 (SFPG)
 
 		See EULA in readme.txt for commercial use
 		See readme.txt for configuration
 
-		Released: 2-October-2014
+		Released: 15-December-2014
 		http://sye.dk/sfpg/
 		by Kenny Svalgaard
 
@@ -20,21 +20,25 @@
 	define('GALLERY_ROOT', './');
 	define('DATA_ROOT', './_sfpg_data/');
 	define('SECURITY_PHRASE', 'sdlgfhjdaslfkjsdlafkjdaslfjaslgfjlasghchange this text!');
+	define('PASSWORD', '');
+	define('ADMIN', FALSE);
 
 	define('DIR_NAME_FILE', '_name.txt');
-	define('DIR_IMAGE_FILE', '_image.jpg');
+	define('DIR_THUMB_FILE', '_dir.jpg');
 	define('DIR_DESC_FILE', '_desc.txt');
+	define('DIR_BANNER_FILE', '_banner.txt');
 	define('DIR_DESC_IN_GALLERY', TRUE);
 	define('DIR_DESC_IN_INFO', TRUE);
 	define('DIR_SORT_REVERSE', TRUE);
-	define('DIR_SORT_BY_TIME', TRUE);
-	$dir_exclude = array('_sfpg_data', '_sfpg_icons', 'folio', 'lost+found');
+	define('DIR_SORT_BY_TIME', FALSE);
+	$dir_exclude = array('_sfpg_data', '_sfpg_icons', 'lost+found');
 	define('DIR_EXCLUDE_REGEX', '');
 
 	define('SHOW_IMAGE_EXT', FALSE);
 	define('IMAGE_SORT_REVERSE', TRUE);
-	define('IMAGE_SORT_BY_TIME', TRUE);
-	define('ROTATE_IMAGES', FALSE);
+	define('IMAGE_SORT_BY_TIME', FALSE);
+	define('IMAGE_EXIF_TIME', FALSE);
+	define('ROTATE_IMAGES', TRUE);
 	define('IMAGE_JPEG_QUALITY', 90);
 	define('IMAGE_EXCLUDE_REGEX', '');
 
@@ -42,26 +46,27 @@
 	define('SHOW_FILE_EXT', TRUE);
 	define('FILE_IN_NEW_WINDOW', TRUE);
 	define('FILE_THUMB_EXT', '.jpg');
-	define('FILE_SORT_REVERSE', TRUE);
-	define('FILE_SORT_BY_TIME', TRUE);
-	$file_exclude = array('.index.php.swp', '.index.php.swo');
+	define('FILE_THUMB_DEFAULT', '');
+	define('FILE_SORT_REVERSE', FALSE);
+	define('FILE_SORT_BY_TIME', FALSE);
+	$file_exclude = array('.index.php.swp', '.index.php.swo', '.htaccess', 'index.html');
 	$file_ext_exclude = array('.php', '.txt', '.sell');
 	define('FILE_EXCLUDE_REGEX', '');
-	$file_ext_thumbs = array('.pdf' => 'pdf.png');
 
 	define('ICONS_DIR', '_sfpg_icons/');
 	define('LINK_BACK', '');
-	define('CHARSET', 'iso-8859-1');
-	define('DATE_FORMAT', 'Y-m-d h:i:s');
+	define('CHARSET', 'utf-8');
+	define('ALLOW_DESC_HTML', FALSE);
+	define('DATE_FORMAT', 'Day Date Month Year Hour:Min:Sec');
 	define('DESC_EXT', '.txt');
 	define('SORT_DIVIDER', '--');
-	define('SORT_NATURAL', TRUE);
+	define('SORT_ALL_NATURAL', TRUE);
 	define('FONT_SIZE', 12);
 	define('UNDERSCORE_AS_SPACE', TRUE);
-	define('NL_TO_BR', FALSE);
 	define('SHOW_EXIF_INFO', TRUE);
 	define('SHOW_IPTC_INFO', TRUE);
 	define('SHOW_INFO_BY_DEFAULT', FALSE);
+	define('ROUND_CORNERS', 3);
 
 	define('THUMB_MAX_WIDTH', 160);
 	define('THUMB_MAX_HEIGHT', 120);
@@ -79,6 +84,16 @@
 	define('WATERMARK', '');
 	define('WATERMARK_FRACTION', 0.1);
 
+	define('MPO_STEREO_IMAGE', TRUE);
+	define('MPO_STEREO_DOTS', TRUE);
+	define('MPO_STEREO_MAX_WIDTH', 300);
+	define('MPO_STEREO_MAX_HEIGHT', 300);
+	define('MPO_FULL_IMAGE', TRUE);
+	define('MPO_FULL_ANAGLYPH', TRUE);
+	define('MPO_FULL_MAX_WIDTH', 1200);
+	define('MPO_FULL_MAX_HEIGHT', 800);
+	define('MPO_SPACING', 20);
+
 	define('INFO_BOX_WIDTH', 250);
 	define('MENU_BOX_HEIGHT', 70);
 	define('NAV_BAR_HEIGHT', 25);
@@ -92,16 +107,16 @@
 	define('NAVI_CHARS_MAX', 100);
 	define('OVERLAY_OPACITY', 90);
 	define('FADE_DURATION_MS', 300);
-	define('SLIDESHOW_DELAY_SEC', 1);
+	define('SLIDESHOW_DELAY_SEC', 5);
+
+	define('SHOW_MAX_IMAGES', FALSE);
+	define('SHOW_IMAGE_DAYS', FALSE);
+	define('DELETE_IMAGE_DAYS', FALSE);
 
 	define('PAYPAL_ENABLED', FALSE);
 	define('PAYPAL_ACCOUNT', '');
 	define('PAYPAL_CURRENCY', 'USD');
 	define('PAYPAL_EXTENSION', '.sell');
-
-	define('SHOW_MAX_IMAGES', FALSE);
-	define('SHOW_IMAGE_DAYS', FALSE);
-	define('DELETE_IMAGE_DAYS', FALSE);
 
 	define('TEXT_PAYPAL_FOR_SALE', 'Sales information');
 	define('TEXT_PAYPAL_PRICE', 'Price (USD)');
@@ -114,6 +129,7 @@
 	define('TEXT_PAYPAL_PLEASE_WAIT', 'Redirecting to PayPal. Please wait... (Can take a few seconds)');
 
 	define('TEXT_GALLERY_NAME', 'Single File PHP Gallery');
+	define('TEXT_BANNER', '');
 	define('TEXT_HOME', 'Home');
 	define('TEXT_CLOSE_IMG_VIEW', 'Close Image');
 	define('TEXT_ACTUAL_SIZE', 'Actual Size');
@@ -150,8 +166,13 @@
 	define('TEXT_NO', 'No');
 	define('TEXT_FIRST_VIEW', 'This is first view of this image. Refresh page to get information.');
 
+	define('TEXT_LOGIN', 'Login');
+	define('TEXT_LOGOUT', 'Logout');
+	define('TEXT_SELECT', 'Select');
+	define('TEXT_SELECT_DELETE', 'Delete Selected');
+
 	define('TEXT_EXIF', 'EXIF');
-	define('TEXT_EXIF_DATE', 'EXIF Date');
+	define('TEXT_EXIF_DATE', 'Date');
 	define('TEXT_EXIF_CAMERA', 'Camera');
 	define('TEXT_EXIF_ISO', 'ISO');
 	define('TEXT_EXIF_SHUTTER', 'Shutter Speed');
@@ -189,6 +210,9 @@
 	$color_thumb_border = '#606060';
 	$color_fullimg_border = '#ffffff';
 
+	$color_marked_back = '#ff0000';
+	$color_marked_text = '#000000';
+	
 	$color_dir_box_border = '#505050';
 	$color_dir_box_back = '#000000';
 	$color_dir_box_text = '#aaaaaa';
@@ -243,7 +267,7 @@
 		}
 		else
 		{
-			if (SORT_NATURAL)
+			if (SORT_ALL_NATURAL)
 			{
 				natcasesort ($arr);
 				$arr = array_values($arr);
@@ -311,9 +335,30 @@
 	}
 
 
-	function str_to_script($str)
+	function sfpg_str_to_script($str, $encode=true, $force_escape=false)
 	{
-		return str_replace("\r", "", str_replace("\n", "", str_replace("\"", "\\\"", str_replace("'", "\'", (NL_TO_BR ? nl2br($str) : $str)))));
+		if (($encode or !ALLOW_DESC_HTML) and !$force_escape)
+		{
+			$str = str_replace("\r", "", $str);
+			$result = '';
+			$str_exp = explode('|', $str);
+			foreach ($str_exp as $ele)
+			{
+				$result.=($result===''?'':'|');
+				$result.=htmlentities($ele, ENT_QUOTES | ENT_DISALLOWED | ENT_HTML5, CHARSET);
+			}
+			$result = str_replace("&NewLine;", "<br>", $result);
+			return $result;
+		}
+		else
+		{
+			$str = str_replace("\r", "", $str);
+			$str = str_replace("\n", "<br>", $str);
+			$str = str_replace("\\", "\\\\", $str);
+			$str = str_replace("\"", "\\\"", $str);
+			$str = str_replace("'", "\'", $str);
+			return $str;
+		}
 	}
 
 
@@ -356,7 +401,7 @@
 	function sfpg_image_type($file)
 	{
 		$type = sfpg_ext($file);
-		if (($type == '.jpg') or ($type == '.jpeg'))
+		if (($type == '.jpg') or ($type == '.jpeg') or ((MPO_FULL_IMAGE or MPO_STEREO_IMAGE) and ($type == '.mpo')))
 		{
 			return 'jpeg';
 		}
@@ -372,7 +417,164 @@
 	}
 
 
-	function sfpg_get_dir($dir)
+	function sfpg_mpo_image($file)
+	{
+		if (!$mpo = @file_get_contents($file))
+		{
+			return false;
+		}
+		$offset = 0;
+		$marker = true;
+		$imgOffset = array();
+		$markA = chr(0xFF).chr(0xD8).chr(0xFF).chr(0xE1);
+		$markB = chr(0xFF).chr(0xD9).chr(0xFF).chr(0xE0);
+		while ($marker!==false)
+		{
+			$marker = strpos($mpo, $markA, $offset);
+			if ($marker===false)
+			{
+				$marker = strpos($mpo, $markB, $offset);
+			}
+			if ($marker!==false)
+			{
+				$imgOffset[] = $marker;
+				$offset = $marker+4;
+			}
+		}
+		$imgOffset[] = strlen($mpo);
+		if (count($imgOffset)<2)
+		{
+			return false;
+		}
+		if (count($imgOffset)>2)
+		{
+			$img_left = imagecreatefromstring(substr($mpo, $imgOffset[0], $imgOffset[1]-$imgOffset[0]));
+			$img_right = imagecreatefromstring(substr($mpo, $imgOffset[1], $imgOffset[2]-$imgOffset[1]));
+			list($mpo_stereo_width, $mpo_stereo_height) = sfpg_aspect_resize(imagesx($img_left), imagesy($img_left), MPO_STEREO_MAX_WIDTH, MPO_STEREO_MAX_HEIGHT, true);
+			list($mpo_full_width, $mpo_full_height) = sfpg_aspect_resize(imagesx($img_left), imagesy($img_left), MPO_FULL_MAX_WIDTH, MPO_FULL_MAX_HEIGHT, false);
+			$stereo_dot_space = 0;
+			if (MPO_STEREO_DOTS)
+			{
+				$dot_size=3;
+				$stereo_dot_space = 2*$dot_size+2*MPO_SPACING;
+			}
+			$stereo_align = 0;
+			$new_img_width = 0;
+			$new_img_height = 0;
+			$full_offset_y = 0;
+			if (MPO_STEREO_IMAGE)
+			{
+				$new_img_width += $mpo_stereo_width*2+MPO_SPACING;
+				$new_img_height += $stereo_dot_space + $mpo_stereo_height + (MPO_FULL_IMAGE ? MPO_SPACING : 0);
+				$full_offset_y = $mpo_stereo_height+MPO_SPACING+$stereo_dot_space;
+			}
+			$full_offset_x = round(($new_img_width-$mpo_full_width)/2);
+			if (MPO_FULL_IMAGE)
+			{
+				if ($mpo_full_width > $new_img_width)
+				{
+					$new_img_width = $mpo_full_width;
+					$stereo_align = (int)(($mpo_full_width-($mpo_stereo_width*2+MPO_SPACING))/2);
+					$full_offset_x = 0;					
+				}
+				$new_img_height += $mpo_full_height;
+			}
+			$new_image = imagecreatetruecolor($new_img_width, $new_img_height);
+			$tmp_left = imagecreatetruecolor($mpo_full_width, $mpo_full_height);
+			imagecopyresampled($tmp_left, $img_left, 0, 0, 0, 0, $mpo_full_width, $mpo_full_height, imagesx($img_left), imagesy($img_left));
+			$tmp_right = imagecreatetruecolor($mpo_full_width, $mpo_full_height);
+			imagecopyresampled($tmp_right, $img_right, 0, 0, 0, 0, $mpo_full_width, $mpo_full_height, imagesx($img_right), imagesy($img_right));
+			if (MPO_FULL_IMAGE)
+			{
+				if (MPO_FULL_ANAGLYPH)
+				{
+					$anaglyph_image = imagecreatetruecolor($mpo_full_width, $mpo_full_height);
+					imagealphablending($anaglyph_image, false);
+					for($y=0; $y<$mpo_full_height; $y++)
+					{
+						for($x=0; $x<$mpo_full_width; $x++)
+						{
+							$left_color = imagecolorat($tmp_left, $x, $y);
+							$r = (int)(($left_color >> 16) & 255) * 0.299 + (($left_color >> 8) & 255) * 0.587 + (($left_color) & 255) * 0.114;
+							if ($r > 255)
+							{
+								$r = 255;
+							}
+							$g = (imagecolorat($tmp_right, $x, $y) >> 8) & 255;
+							$b = (imagecolorat($tmp_right, $x, $y)) & 255;
+							imagesetpixel($anaglyph_image, $x, $y, imagecolorallocate($anaglyph_image, $r, $g, $b));
+						}
+					}
+					imagecopyresampled($new_image, $anaglyph_image, $full_offset_x, $full_offset_y, 0, 0, $mpo_full_width, $mpo_full_height, $mpo_full_width, $mpo_full_height);
+					imagedestroy($anaglyph_image);
+					imagedestroy($tmp_left);
+					imagedestroy($tmp_right);
+				}
+				else
+				{
+					imagecopyresampled($new_image, $img_left, $full_offset_x, $full_offset_y, 0, 0, $mpo_full_width, $mpo_full_height, imagesx($img_left), imagesy($img_left));
+				}
+			}
+			if (MPO_STEREO_IMAGE)
+			{
+				imagecopyresampled($new_image, $img_left, $stereo_align, $stereo_dot_space, 0, 0, $mpo_stereo_width, $mpo_stereo_height, imagesx($img_left), imagesy($img_left));
+				imagedestroy($img_left);
+				imagecopyresampled($new_image, $img_right, $stereo_align+$mpo_stereo_width+MPO_SPACING, $stereo_dot_space, 0, 0, $mpo_stereo_width, $mpo_stereo_height, imagesx($img_right), imagesy($img_right));
+				imagedestroy($img_right);
+				$white = imagecolorallocate($new_image, 255, 255, 255);
+				imagefilledrectangle($new_image, $stereo_align+(int)($mpo_stereo_width/2)-3, MPO_SPACING-3, $stereo_align+(int)($mpo_stereo_width/2)+3, MPO_SPACING+3, $white);
+				imagefilledrectangle($new_image, $stereo_align+MPO_SPACING+(int)($mpo_stereo_width*1.5)-3, MPO_SPACING-3, $stereo_align+MPO_SPACING+(int)($mpo_stereo_width*1.5)+3, MPO_SPACING+3, $white);
+			}
+			return $new_image;
+		}
+		else
+		{
+			$image = imagecreatefromstring(substr($mpo, $imgOffset[0], $imgOffset[1]-$imgOffset[0]));
+			list($mpo_width, $mpo_height) = sfpg_aspect_resize(imagesx($image), imagesy($image), MPO_FULL_MAX_WIDTH, MPO_FULL_MAX_HEIGHT, false);
+			$new_image = imagecreatetruecolor($mpo_width, $mpo_height);
+			imagecopyresampled($new_image, $image, 0, 0, 0, 0, $mpo_width, $mpo_height, imagesx($image), imagesy($image));
+			imagedestroy($image);
+			return $new_image;
+		}
+	}
+
+
+	function sfpg_aspect_resize($image_width, $image_height, $max_width, $max_height, $enlarge)
+	{
+		if (($image_width < $max_width) and ($image_height < $max_height) and !$enlarge)
+		{
+			$new_img_height = $image_height;
+			$new_img_width = $image_width;
+		}
+		else
+		{
+			$aspect_x = $image_width / $max_width;
+			$aspect_y = $image_height / $max_height;
+			if ($aspect_x > $aspect_y)
+			{
+				$new_img_width = $max_width;
+				$new_img_height = $image_height / $aspect_x;
+			}
+			else
+			{
+				$new_img_height = $max_height;
+				$new_img_width = $image_width / $aspect_y;
+			}
+		}
+		return array($new_img_width, $new_img_height);
+	}
+
+
+	function sfpg_mkdir($dir)
+	{
+		if (!is_dir($dir))
+		{
+			mkdir($dir, 0777, TRUE);
+		}
+	}
+
+
+	function sfpg_get_dir($dir, $for_dir_info=FALSE)
 	{
 		global $dir_exclude, $file_exclude, $file_ext_exclude;
 		$dirs = array();
@@ -389,7 +591,7 @@
 			{
 				if (is_dir(GALLERY_ROOT.$dir.$var))
 				{
-					if (($var != '.') and ($var != '..') and !in_array(strtolower($var), $dir_exclude) and !preg_match(DIR_EXCLUDE_REGEX, $var))
+					if (($var != '.') and ($var != '..') and !in_array(strtolower($var), $dir_exclude) and !@preg_match(DIR_EXCLUDE_REGEX, $var))
 					{
 						$dirs[] = $var;
 						if (DIR_SORT_BY_TIME)
@@ -400,7 +602,7 @@
 				}
 				elseif (sfpg_image_type($var))
 				{
-					if (($var != DIR_IMAGE_FILE) and !preg_match(IMAGE_EXCLUDE_REGEX, $var))
+					if (($var != DIR_THUMB_FILE) and !@preg_match(IMAGE_EXCLUDE_REGEX, $var))
 					{
 						if ((DELETE_IMAGE_DAYS) and (filemtime(GALLERY_ROOT.$dir.$var)<(time()-(DELETE_IMAGE_DAYS*86400))))
 						{
@@ -411,14 +613,29 @@
 							$images[] = $var;
 							if (IMAGE_SORT_BY_TIME)
 							{
-								$images_time[] = filemtime(GALLERY_ROOT.$dir.$var);
+								if (IMAGE_EXIF_TIME)
+								{
+									if ($img_info=@file_get_contents(DATA_ROOT.'info/'.$dir.$var))
+									{
+										$spl=explode('|', $img_info);
+										$images_time[]=$spl[4];
+									}
+									else
+									{
+										$images_time[]=filemtime(GALLERY_ROOT.$dir.$var);
+									}
+								}
+								else
+								{
+									$images_time[]=filemtime(GALLERY_ROOT.$dir.$var);
+								}
 							}
 						}
 					}
 				}
 				elseif (SHOW_FILES)
 				{
-					if (!in_array(strtolower($var), $file_exclude) and !in_array(sfpg_ext($var), $file_ext_exclude) and !preg_match(FILE_EXCLUDE_REGEX, $var))
+					if (!in_array(strtolower($var), $file_exclude) and !in_array(sfpg_ext($var), $file_ext_exclude) and !@preg_match(FILE_EXCLUDE_REGEX, $var))
 					{
 						$files[] = $var;
 						if (FILE_SORT_BY_TIME)
@@ -432,6 +649,10 @@
 					$misc[] = $var;
 				}
 			}
+			if ($for_dir_info)
+			{
+				$misc = 0;
+			}
 			if (SHOW_FILES)
 			{
 				foreach ($files as $val)
@@ -439,8 +660,15 @@
 					$fti = array_search($val.FILE_THUMB_EXT, $images);
 					if ($fti !== FALSE)
 					{
-						array_splice($images, $fti, 1);
-						array_splice($images_time, $fti, 1);
+						if ($for_dir_info)
+						{
+							$misc++;
+						}
+						else
+						{
+							array_splice($images, $fti, 1);
+							array_splice($images_time, $fti, 1);
+						}
 					}
 				}
 			}
@@ -461,7 +689,7 @@
 	function sfpg_image($image_dir, $image_file, $func, $download=FALSE)
 	{
 		$image_path_file = DATA_ROOT.$func.'/'.$image_dir.$image_file;
-		$image_type = sfpg_image_type($image_path_file);
+		$image_type = sfpg_image_type($image_file);
 
 		if ($func == 'image')
 		{
@@ -514,19 +742,23 @@
 						$source_img = GALLERY_ROOT.$image_dir.$image_file;
 					}
 				}
-
-				if (!$image = imagecreatefromstring(file_get_contents($source_img)))
+				$image_changed = FALSE;
+				if ((MPO_FULL_IMAGE or MPO_STEREO_IMAGE) and (sfpg_ext($image_file)=='.mpo') and ($func != 'preview'))
+				{
+					if (!$image = sfpg_mpo_image($source_img))
+					{
+						exit;
+					}
+					$image_changed = TRUE;
+				}
+				elseif (!$image = imagecreatefromstring(file_get_contents($source_img)))
 				{
 					exit;
 				}
 
 				if (($func == 'thumb') and ($image_dir != ICONS_DIR))
 				{
-					$image_changed = FALSE;
-					if (!is_dir(DATA_ROOT.'info/'.$image_dir))
-					{
-						mkdir(DATA_ROOT.'info/'.$image_dir, 0777, TRUE);
-					}
+					sfpg_mkdir(DATA_ROOT.'info/'.$image_dir);
 					$exif_info = '||||||';
 					if (function_exists('exif_read_data'))
 					{
@@ -539,7 +771,7 @@
 								if(isset($exif_data['DateTimeOriginal']))
 								{
 									$exif_time = explode(':', str_replace(' ', ':', $exif_data['DateTimeOriginal']));
-									$exif_info .= date(DATE_FORMAT, mktime($exif_time[3], $exif_time[4], $exif_time[5], $exif_time[1], $exif_time[2], $exif_time[0]));
+									$exif_info .= mktime($exif_time[3], $exif_time[4], $exif_time[5], $exif_time[1], $exif_time[2], $exif_time[0]);
 								}
 								else
 								{
@@ -728,7 +960,7 @@
 						}
 						else
 						{
-							$iptc_info = 'sfpg_no_iptc_data_in_file|||||||||||||||||';
+							$iptc_info = 'sfpgnoiptc|||||||||||||||||';
 						}
 					}
 
@@ -769,10 +1001,7 @@
 
 					if ($image_changed)
 					{
-						if (!is_dir(DATA_ROOT.'image/'.$image_dir))
-						{
-							mkdir(DATA_ROOT.'image/'.$image_dir, 0777, TRUE);
-						}
+						sfpg_mkdir(DATA_ROOT.'image/'.$image_dir);
 						$new_full_img = DATA_ROOT.'image/'.$image_dir.$image_file;
 						if ($image_type == 'jpeg')
 						{
@@ -789,32 +1018,10 @@
 					}
 					
 					$fp = fopen(DATA_ROOT.'info/'.$image_dir.$image_file, 'w');
-					fwrite($fp, date(DATE_FORMAT, filemtime(GALLERY_ROOT.$image_dir.$image_file)).'|'.sfpg_file_size(filesize(GALLERY_ROOT.$image_dir.$image_file)).'|'.imagesx($image).'|'.imagesy($image).'|'.$exif_info.'|'.$iptc_info);
+					fwrite($fp, filemtime(GALLERY_ROOT.$image_dir.$image_file).'|'.sfpg_file_size(filesize(GALLERY_ROOT.$image_dir.$image_file)).'|'.imagesx($image).'|'.imagesy($image).'|'.$exif_info.'|'.$iptc_info);
 					fclose($fp);
 				}
-
-				$image_width = imagesx($image);
-				$image_height = imagesy($image);
-				if (($image_width < $max_width) and ($image_height < $max_height) and !$enlarge)
-				{
-					$new_img_height = $image_height;
-					$new_img_width = $image_width;
-				}
-				else
-				{
-					$aspect_x = $image_width / $max_width;
-					$aspect_y = $image_height / $max_height;
-					if ($aspect_x > $aspect_y)
-					{
-						$new_img_width = $max_width;
-						$new_img_height = $image_height / $aspect_x;
-					}
-					else
-					{
-						$new_img_height = $max_height;
-						$new_img_width = $image_width / $aspect_y;
-					}
-				}
+				list($new_img_width, $new_img_height) = sfpg_aspect_resize(imagesx($image), imagesy($image), $max_width, $max_height, $enlarge);
 				$new_image = imagecreatetruecolor($new_img_width, $new_img_height);
 				if (LOW_IMAGE_RESAMPLE_QUALITY)
 				{
@@ -825,10 +1032,7 @@
 					imagecopyresampled($new_image, $image, 0, 0, 0, 0, $new_img_width, $new_img_height, imagesx($image), imagesy($image));
 				}
 				imagedestroy($image);
-				if (!is_dir(DATA_ROOT.$func.'/'.$image_dir))
-				{
-					mkdir(DATA_ROOT.$func.'/'.$image_dir, 0777, TRUE);
-				}
+				sfpg_mkdir(DATA_ROOT.$func.'/'.$image_dir);
 				header('Content-type: image/'.$image_type);
 				header('Content-Disposition: filename="'.$func.'_'.$image_file.'"');
 				if ($image_type == 'jpeg')
@@ -854,18 +1058,18 @@
 
 	function sfpg_dir_info($dir, $initial=TRUE)
 	{
-		list($dirs, $images, $files, $misc) = sfpg_get_dir($dir);
+		list($dirs, $images, $files, $misc) = sfpg_get_dir($dir, TRUE);
 		if ($initial)
 		{
-			$info = count($dirs).'|'.count($images).'|'.count($files).'|'.date(DATE_FORMAT, filemtime(GALLERY_ROOT.GALLERY.'.')).'|';
+			$info = count($dirs).'|'.(int)(count($images)-$misc).'|'.count($files).'|'.filemtime(GALLERY_ROOT.GALLERY.'.').'|';
 		}
 		else
 		{
 			$info = '';
 		}
-		if ((DIR_IMAGE_FILE) and file_exists(GALLERY_ROOT.$dir.DIR_IMAGE_FILE))
+		if ((DIR_THUMB_FILE) and file_exists(GALLERY_ROOT.$dir.DIR_THUMB_FILE))
 		{
-			return $info.sfpg_url_string($dir, DIR_IMAGE_FILE);
+			return $info.sfpg_url_string($dir, DIR_THUMB_FILE);
 		}
 		if (isset($images[0]))
 		{
@@ -879,9 +1083,9 @@
 				return $info.$subresult;
 			}
 		}
-		if ($initial and file_exists(GALLERY_ROOT.ICONS_DIR.DIR_IMAGE_FILE))
+		if ($initial and file_exists(GALLERY_ROOT.ICONS_DIR.DIR_THUMB_FILE))
 		{
-			return $info.sfpg_url_string(ICONS_DIR, DIR_IMAGE_FILE);
+			return $info.sfpg_url_string(ICONS_DIR, DIR_THUMB_FILE);
 		}
 		return $info;
 	}
@@ -923,6 +1127,15 @@
 	}
 
 
+	function sfpg_delete_from_data_root($element)
+	{
+		sfpg_delete(DATA_ROOT.'info/'.$element);
+		sfpg_delete(DATA_ROOT.'thumb/'.$element);
+		sfpg_delete(DATA_ROOT.'image/'.$element);
+		sfpg_delete(DATA_ROOT.'preview/'.$element);
+	}
+
+
 	function sfpg_clean_data_root($dir)
 	{
 		$items = array_diff(scandir(DATA_ROOT.'info/'.$dir),array('.','..','_sfpg_dir'));
@@ -930,10 +1143,7 @@
 		{
 			if (!is_dir(GALLERY_ROOT.$dir.$item) and !file_exists(GALLERY_ROOT.$dir.$item))
 			{
-				sfpg_delete(DATA_ROOT.'info/'.$dir.$item);
-				sfpg_delete(DATA_ROOT.'thumb/'.$dir.$item);
-				sfpg_delete(DATA_ROOT.'image/'.$dir.$item);
-				sfpg_delete(DATA_ROOT.'preview/'.$dir.$item);
+				sfpg_delete_from_data_root($dir.$item);
 			}
 		}
 		$path='';
@@ -951,9 +1161,9 @@
 
 	function sfpg_javascript()
 	{
-		global $dirs, $images, $files, $misc, $file_ext_thumbs;
+		global $dirs, $images, $files, $misc;
 
-		echo "<script language=\"JavaScript\" TYPE=\"text/javascript\">
+		echo "<script>
 		<!--
 
 		var phpSelf = '".$_SERVER["PHP_SELF"]."';
@@ -997,9 +1207,13 @@
 
 		var viewportWidth;
 		var viewportHeight;
-
 		var imgFullWidth;
 		var imgFullHeight;
+		
+		var selectedDirs = [];
+		var selectedImages = [];
+		var selectedFiles = [];
+		var selecting = false;
 
 		";
 		if (KEYBOARD_NAVIGATION)
@@ -1073,13 +1287,20 @@
 			{
 				resizeImage();
 			}
-			document.getElementById('box_image').style.width = viewportWidth;
-			document.getElementById('box_image').style.height = viewportHeight;
-			document.getElementById('box_wait').style.width = viewportWidth;
-			document.getElementById('box_wait').style.height = viewportHeight;
-			document.getElementById('box_gallery').style.width = viewportWidth;
-			document.getElementById('box_gallery').style.height = viewportHeight;
-			document.getElementById('box_info').style.height = viewportHeight-20;
+			var thirdWidth=Math.round((viewportWidth-40)/3);
+			document.getElementById('box_image').style.width = viewportWidth+'px';
+			document.getElementById('box_image').style.height = viewportHeight+'px';
+			document.getElementById('box_wait').style.width = viewportWidth+'px';
+			document.getElementById('box_wait').style.height = viewportHeight+'px';
+			document.getElementById('box_gallery').style.width = viewportWidth+'px';
+			document.getElementById('box_gallery').style.height = viewportHeight+'px';
+			document.getElementById('box_info').style.height = (viewportHeight-20)+'px';
+			document.getElementById('box_left').style.width = thirdWidth+'px';
+			document.getElementById('box_left').style.height = (viewportHeight-40)+'px';
+			document.getElementById('box_left').style.right = (thirdWidth*2+20)+'px';
+			document.getElementById('box_right').style.width = thirdWidth+'px';
+			document.getElementById('box_right').style.height = (viewportHeight-40)+'px';
+			document.getElementById('box_right').style.right = 20+'px';
 			showMenu();
 		}
 
@@ -1125,7 +1346,7 @@
 			{
 				newImgX = imgFullWidth;
 				newImgY = imgFullHeight;
-				document.getElementById('img_resize').innerHTML = '".str_to_script(TEXT_NOT_SCALED)."';
+				document.getElementById('img_resize').innerHTML = '".sfpg_str_to_script(TEXT_NOT_SCALED)."';
 			}
 			document.getElementById('img_size').innerHTML = imgFullWidth + ' x ' + imgFullHeight;
 			document.getElementById('full').width = newImgX;
@@ -1152,40 +1373,48 @@
 		{
 			if ((imgLink.length>0)&&naviOk)
 			{
-				menu = '<span onmouseover=\"this.className=\'sfpg_button_hover\';\" onmouseout=\"this.className=\'sfpg_button\';\" class=\"sfpg_button\" onclick=\"cycleImg(-1)\">".str_to_script(TEXT_PREVIOUS)."</span>';
-				menu += '<span onmouseover=\"this.className=\'sfpg_button_hover\';\" onmouseout=\"this.className=\'sfpg_button\';\" class=\"sfpg_button\" onclick=\"cycleImg(1)\">".str_to_script(TEXT_NEXT)."</span>';
+				menu = '<span id=\"button_left\" onmouseover=\"this.className=\'sfpg_button_hover\';\" onmouseout=\"this.className=\'sfpg_button\';\" class=\"sfpg_button\" onclick=\"cycleImg(-1)\">".sfpg_str_to_script(TEXT_PREVIOUS)."</span>';
+				if (index)
+				{
+					menu += '<span id=\"button_close\" onmouseover=\"this.className=\'sfpg_button_hover\';\" onmouseout=\"this.className=\'sfpg_button\';\" class=\"sfpg_button\" onclick=\"closeImageView()\">".sfpg_str_to_script(TEXT_CLOSE_IMG_VIEW)."</span>';
+				}
+				else
+				{
+					menu += '<span class=\"sfpg_button_disabled\">".sfpg_str_to_script(TEXT_CLOSE_IMG_VIEW)."</span>';
+				}
+				menu += '<span id=\"button_right\" onmouseover=\"this.className=\'sfpg_button_hover\';\" onmouseout=\"this.className=\'sfpg_button\';\" class=\"sfpg_button\" onclick=\"cycleImg(1)\">".sfpg_str_to_script(TEXT_NEXT)."</span>';
 				";
 				if (TEXT_SLIDESHOW)
 				{
 					echo"
 					if (slideshowActive)
 					{
-						menu += '<span onmouseover=\"this.className=\'sfpg_button_hover\';\" onmouseout=\"this.className=\'sfpg_button_on\';\" class=\"sfpg_button_on\" onclick=\"slideshowActive=false; showMenu();\">".str_to_script(TEXT_SLIDESHOW)."</span>';
+						menu += '<span onmouseover=\"this.className=\'sfpg_button_hover\';\" onmouseout=\"this.className=\'sfpg_button_on\';\" class=\"sfpg_button_on\" onclick=\"slideshowActive=false; showMenu();\">".sfpg_str_to_script(TEXT_SLIDESHOW)."</span>';
 					}
 					else
 					{
-						menu += '<span onmouseover=\"this.className=\'sfpg_button_hover\';\" onmouseout=\"this.className=\'sfpg_button\';\" class=\"sfpg_button\" onclick=\"slideshowActive=true; showMenu(); slideshow(true);\">".str_to_script(TEXT_SLIDESHOW)."</span>';
+						menu += '<span onmouseover=\"this.className=\'sfpg_button_hover\';\" onmouseout=\"this.className=\'sfpg_button\';\" class=\"sfpg_button\" onclick=\"slideshowActive=true; showMenu(); slideshow(true);\">".sfpg_str_to_script(TEXT_SLIDESHOW)."</span>';
 					}";
 				}
 				echo "
-
 			}
 			else
 			{
-				menu = '<span class=\"sfpg_button_disabled\">".str_to_script(TEXT_PREVIOUS)."</span>';
-				menu += '<span class=\"sfpg_button_disabled\">".str_to_script(TEXT_NEXT)."</span>';
-				".(TEXT_SLIDESHOW ? "menu += '<span class=\"sfpg_button_disabled\">" . str_to_script(TEXT_SLIDESHOW) . "</span>';" : "")."
+				menu = '<span class=\"sfpg_button_disabled\">".sfpg_str_to_script(TEXT_PREVIOUS)."</span>';
+				menu += '<span class=\"sfpg_button_disabled\">".sfpg_str_to_script(TEXT_CLOSE_IMG_VIEW)."</span>';
+				menu += '<span class=\"sfpg_button_disabled\">".sfpg_str_to_script(TEXT_NEXT)."</span>';
+				".(TEXT_SLIDESHOW ? "menu += '<span class=\"sfpg_button_disabled\">" . sfpg_str_to_script(TEXT_SLIDESHOW) . "</span>';" : "")."
 			}";
 			if (TEXT_INFO)
 			{
 				echo "
 				if (showInfo)
 				{
-					menu += '<span onmouseover=\"this.className=\'sfpg_button_hover\';\" onmouseout=\"this.className=\'sfpg_button_on\';\" onclick=\"toggleInfo(showInfo);\" class=\"sfpg_button_on\">".str_to_script(TEXT_INFO)."</span>';
+					menu += '<span onmouseover=\"this.className=\'sfpg_button_hover\';\" onmouseout=\"this.className=\'sfpg_button_on\';\" onclick=\"toggleInfo(showInfo);\" class=\"sfpg_button_on\">".sfpg_str_to_script(TEXT_INFO)."</span>';
 				}
 				else
 				{
-					menu += '<span onmouseover=\"this.className=\'sfpg_button_hover\';\" onmouseout=\"this.className=\'sfpg_button\';\" onclick=\"toggleInfo(showInfo);\" class=\"sfpg_button\">".str_to_script(TEXT_INFO)."</span>';
+					menu += '<span onmouseover=\"this.className=\'sfpg_button_hover\';\" onmouseout=\"this.className=\'sfpg_button\';\" onclick=\"toggleInfo(showInfo);\" class=\"sfpg_button\">".sfpg_str_to_script(TEXT_INFO)."</span>';
 				}";
 			}
 			echo "
@@ -1193,16 +1422,16 @@
 			{
 				if (actualSize)
 				{
-					menu += '<span onmouseover=\"this.className=\'sfpg_button_hover\';\" onmouseout=\"this.className=\'sfpg_button_on\';\" class=\"sfpg_button_on\" onclick=\"fullSize()\">".str_to_script(TEXT_ACTUAL_SIZE)."</span>';
+					menu += '<span onmouseover=\"this.className=\'sfpg_button_hover\';\" onmouseout=\"this.className=\'sfpg_button_on\';\" class=\"sfpg_button_on\" onclick=\"fullSize()\">".sfpg_str_to_script(TEXT_ACTUAL_SIZE)."</span>';
 				}
 				else
 				{
-					menu += '<span onmouseover=\"this.className=\'sfpg_button_hover\';\" onmouseout=\"this.className=\'sfpg_button\';\" class=\"sfpg_button\" onclick=\"fullSize()\">".str_to_script(TEXT_ACTUAL_SIZE)."</span>';
+					menu += '<span onmouseover=\"this.className=\'sfpg_button_hover\';\" onmouseout=\"this.className=\'sfpg_button\';\" class=\"sfpg_button\" onclick=\"fullSize()\">".sfpg_str_to_script(TEXT_ACTUAL_SIZE)."</span>';
 				}
 			}
 			else
 			{
-				menu += '<span class=\"sfpg_button_disabled\">".str_to_script(TEXT_ACTUAL_SIZE)."</span>';
+				menu += '<span class=\"sfpg_button_disabled\">".sfpg_str_to_script(TEXT_ACTUAL_SIZE)."</span>';
 			}
 
 
@@ -1214,34 +1443,44 @@
 				{
 					if (fullImgLoaded)
 					{
-						menu += '<span onmouseover=\"this.className=\'sfpg_button_hover\';\" onmouseout=\"this.className=\'sfpg_button_on\';\" class=\"sfpg_button_on\" onclick=\"openImageView('+index+', false)\">".str_to_script(TEXT_FULLRES)."</span>';
+						menu += '<span onmouseover=\"this.className=\'sfpg_button_hover\';\" onmouseout=\"this.className=\'sfpg_button_on\';\" class=\"sfpg_button_on\" onclick=\"openImageView('+index+', false)\">".sfpg_str_to_script(TEXT_FULLRES)."</span>';
 					}
 					else
 					{
-						menu += '<span onmouseover=\"this.className=\'sfpg_button_hover\';\" onmouseout=\"this.className=\'sfpg_button\';\" class=\"sfpg_button\" onclick=\"openImageView('+index+', true)\">".str_to_script(TEXT_FULLRES)."</span>';
+						menu += '<span onmouseover=\"this.className=\'sfpg_button_hover\';\" onmouseout=\"this.className=\'sfpg_button\';\" class=\"sfpg_button\" onclick=\"openImageView('+index+', true)\">".sfpg_str_to_script(TEXT_FULLRES)."</span>';
 					}
 				}
 				else
 				{
-					menu += '<span class=\"sfpg_button_disabled\">".str_to_script(TEXT_FULLRES)."</span>';
+					menu += '<span class=\"sfpg_button_disabled\">".sfpg_str_to_script(TEXT_FULLRES)."</span>';
 				}
 				";
 			}
-			echo "
-			if (index)
-			{
-				menu += '<span onmouseover=\"this.className=\'sfpg_button_hover\';\" onmouseout=\"this.className=\'sfpg_button\';\" class=\"sfpg_button\" onclick=\"closeImageView()\">".str_to_script(TEXT_CLOSE_IMG_VIEW)."</span>';
-			}
-			else
-			{
-				menu += '<span class=\"sfpg_button_disabled\">".str_to_script(TEXT_CLOSE_IMG_VIEW)."</span>';
-			}
-			";
 			if (LINK_BACK)
 			{
-				echo "menu += '<span onmouseover=\"this.className=\'sfpg_button_hover\';\" onmouseout=\"this.className=\'sfpg_button\';\" class=\"sfpg_button\" onclick=\"window.location=\'".LINK_BACK."\'\">".str_to_script(TEXT_LINK_BACK)."</span>';
+				echo "menu += '<span onmouseover=\"this.className=\'sfpg_button_hover\';\" onmouseout=\"this.className=\'sfpg_button\';\" class=\"sfpg_button\" onclick=\"window.location=\'".LINK_BACK."\'\">".sfpg_str_to_script(TEXT_LINK_BACK)."</span>';
 				";
 			}
+			if (ADMIN===TRUE)
+			{
+				echo"
+					if (selecting)
+					{
+						menu += '<span onmouseover=\"this.className=\'sfpg_button_hover\';\" onmouseout=\"this.className=\'sfpg_button_on\';\" class=\"sfpg_button_on\" onclick=\"toggleSelect()\">".sfpg_str_to_script(TEXT_SELECT)."</span>';
+						menu += '<span onmouseover=\"this.className=\'sfpg_button_hover\';\" onmouseout=\"this.className=\'sfpg_button\';\" class=\"sfpg_button\" onclick=\"postSelected()\">".sfpg_str_to_script(TEXT_SELECT_DELETE)."</span>';
+					}
+					else
+					{
+						menu += '<span onmouseover=\"this.className=\'sfpg_button_hover\';\" onmouseout=\"this.className=\'sfpg_button\';\" class=\"sfpg_button\" onclick=\"toggleSelect()\">".sfpg_str_to_script(TEXT_SELECT)."</span>';
+						menu += '<span class=\"sfpg_button_disabled\">".sfpg_str_to_script(TEXT_SELECT_DELETE)."</span>';
+					}
+				";
+			}
+			if (PASSWORD!=='')
+			{
+				echo "menu += '<span onmouseover=\"this.className=\'sfpg_button_hover\';\" onmouseout=\"this.className=\'sfpg_button\';\" class=\"sfpg_button\" onclick=\"window.location=\'".$_SERVER['PHP_SELF']."?cmd=logout\'\">".sfpg_str_to_script(TEXT_LOGOUT)."</span>';";
+			}
+
 			echo "menu += '<span onmouseover=\"this.className=\'sfpg_button_hover\';\" onmouseout=\"this.className=\'sfpg_button\';\" class=\"sfpg_button\" onclick=\"window.location=\'http://sye.dk/sfpg/\'\">sfpg - sye.dk</span>';
 			document.getElementById('div_menu').innerHTML = menu;
 		}
@@ -1260,6 +1499,8 @@
 			document.getElementById('wait').style.visibility='visible';
 			document.getElementById('box_wait').style.visibility='visible';
 			document.getElementById('box_image').style.visibility='visible';
+			document.getElementById('box_left').style.visibility='visible';
+			document.getElementById('box_right').style.visibility='visible';
 			preloadImage(index, full);
 			actualSize = false;
 			fullImgLoaded = full;
@@ -1288,6 +1529,31 @@
 				preloaded = imgId;
 			}
 		}
+		";
+		$date_format = str_replace('Year', "'+year+'", DATE_FORMAT);
+		$date_format = str_replace('Nrmonth', "'+nrmon+'", $date_format);
+		$date_format = str_replace('Month', "'+month+'", $date_format);
+		$date_format = str_replace('Date', "'+date+'", $date_format);
+		$date_format = str_replace('Hour', "'+hour+'", $date_format);
+		$date_format = str_replace('Min', "'+min+'", $date_format);
+		$date_format = str_replace('Sec', "'+sec+'", $date_format);
+		$date_format = str_replace('Day', "'+day+'", $date_format);
+		echo"
+		function dateFormat(timestamp)
+		{
+			var dt = new Date(timestamp*1000);
+			var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+			var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+			var year = dt.getFullYear();
+			var nrmon = dt.getMonth()+1;
+			var month = months[dt.getMonth()];
+			var date = dt.getDate();
+			var hour = (dt.getHours()<10?'0'+dt.getHours():dt.getHours());
+			var min = (dt.getMinutes()<10?'0'+dt.getMinutes():dt.getMinutes());
+			var sec = (dt.getSeconds()<10?'0'+dt.getSeconds():dt.getSeconds());
+			var day = days[dt.getDay()];
+			return '".$date_format."';
+		}
 
 
 		function fillInfo(type, id)
@@ -1303,31 +1569,31 @@
 					}
 					else
 					{
-						info += '<br><br>".str_to_script(TEXT_NO_IMAGES)."';
+						info += '<br><br>".sfpg_str_to_script(TEXT_NO_IMAGES)."';
 					}
 					info += '</div>';
-					info += '<strong>".str_to_script(TEXT_DIR_NAME)."</strong><br><div class=\"sfpg_info_text\">'+dirName[id] + '</div><br>';
+					info += '<strong>".sfpg_str_to_script(TEXT_DIR_NAME)."</strong><br><div class=\"sfpg_info_text\">'+dirName[id] + '</div><br>';
 					var splint = dirInfo[id].split('|');
-					".(DIR_DESC_IN_INFO?"info += '<strong>".str_to_script(TEXT_DESCRIPTION)."</strong><br><div class=\"sfpg_info_text\">'+splint[4]+'<br></div><br>';":"")."
-					info += '<strong>".str_to_script(TEXT_INFO)."</strong><br><div class=\"sfpg_info_text\">';
-					info += '".str_to_script(TEXT_DATE).": '+splint[0]+'<br>';
-					info += '".str_to_script(TEXT_DIRS).": '+splint[1]+'<br>';
-					info += '".str_to_script(TEXT_IMAGES).": '+splint[2]+'<br>';";
+					".(DIR_DESC_IN_INFO?"info += '<strong>".sfpg_str_to_script(TEXT_DESCRIPTION)."</strong><br><div class=\"sfpg_info_text\">'+splint[4]+'<br></div><br>';":"")."
+					info += '<strong>".sfpg_str_to_script(TEXT_INFO)."</strong><br><div class=\"sfpg_info_text\">';
+					info += '".sfpg_str_to_script(TEXT_DATE).": '+dateFormat(splint[0])+'<br>';
+					info += '".sfpg_str_to_script(TEXT_DIRS).": '+splint[1]+'<br>';
+					info += '".sfpg_str_to_script(TEXT_IMAGES).": '+splint[2]+'<br>';";
 					if (SHOW_FILES)
 					{
 						echo "
-						info += '".str_to_script(TEXT_FILES).": '+splint[3]+'<br>';";
+						info += '".sfpg_str_to_script(TEXT_FILES).": '+splint[3]+'<br>';";
 					}
 					echo "
 					info += '</div><br>';
-					info += '<strong>".str_to_script(TEXT_LINKS)."</strong><br><a href=\"'+phpSelf+'?sfpg='+dirLink[id]+'\">".str_to_script(TEXT_DIRECT_LINK_GALLERY)."</a><br><br>';
+					info += '<strong>".sfpg_str_to_script(TEXT_LINKS)."</strong><br><a href=\"'+phpSelf+'?sfpg='+dirLink[id]+'\">".sfpg_str_to_script(TEXT_DIRECT_LINK_GALLERY)."</a><br><br>';
 				}
 				else if (type == 'img')
 				{
 					info += '<img class=\"thumb\" alt=\"\" src=\"'+phpSelf+'?cmd=thumb&sfpg='+imgLink[id]+'\">';
 					info += '</div>';
 					var splint = imgInfo[id].split('|');
-					info += '<strong>".str_to_script(TEXT_IMAGE_NAME)."</strong><br><div class=\"sfpg_info_text\">'+imgName[id] + '</div><br>';
+					info += '<strong>".sfpg_str_to_script(TEXT_IMAGE_NAME)."</strong><br><div class=\"sfpg_info_text\">'+imgName[id] + '</div><br>';
 					";
 					if(PAYPAL_ENABLED)
 					{
@@ -1335,17 +1601,17 @@
 						if (typeof imgSell[id]!='undefined')
 						{
 							var sellSplint = imgSell[id].split('|');
-							info += '<strong>".str_to_script(TEXT_PAYPAL_FOR_SALE)."</strong><br><div class=\"sfpg_info_text\">';
-							info += '".str_to_script(TEXT_PAYPAL_PRICE).": '+(((typeof sellSplint[0]!='undefined')&&(sellSplint[0]!=''))?sellSplint[0]:'".str_to_script(TEXT_PAYPAL_NO_PRICE)."')+'<br>';
-							info += '".str_to_script(TEXT_PAYPAL_IN_STOCK).": '+(((typeof sellSplint[1]!='undefined')&&(sellSplint[1]!=''))?sellSplint[1]:'".str_to_script(TEXT_PAYPAL_OUT_OF_STOCK)."')+'<br>';
-							info += '".str_to_script(TEXT_PAYPAL_ITEM_ID).": '+sellSplint[2]+'<br>';
+							info += '<strong>".sfpg_str_to_script(TEXT_PAYPAL_FOR_SALE)."</strong><br><div class=\"sfpg_info_text\">';
+							info += '".sfpg_str_to_script(TEXT_PAYPAL_PRICE).": '+(((typeof sellSplint[0]!='undefined')&&(sellSplint[0]!=''))?sellSplint[0]:'".sfpg_str_to_script(TEXT_PAYPAL_NO_PRICE)."')+'<br>';
+							info += '".sfpg_str_to_script(TEXT_PAYPAL_IN_STOCK).": '+(((typeof sellSplint[1]!='undefined')&&(sellSplint[1]!=''))?sellSplint[1]:'".sfpg_str_to_script(TEXT_PAYPAL_OUT_OF_STOCK)."')+'<br>';
+							info += '".sfpg_str_to_script(TEXT_PAYPAL_ITEM_ID).": '+sellSplint[2]+'<br>';
 							if ((typeof sellSplint[1]!='undefined')&&(sellSplint[1]>0)&&(typeof sellSplint[0]!='undefined')&&(sellSplint[0]!=''))
 							{
-								info += '<br><span onmouseover=\"this.className=\'sfpg_button_hover\';\" onmouseout=\"this.className=\'sfpg_button\';\" onclick=\"window.location=\''+phpSelf+'?cmd=buy&sfpg='+imgLink[id]+'\'\" class=\"sfpg_button\">".str_to_script(TEXT_PAYPAL_BUY)."</span><br><br>';
+								info += '<br><span onmouseover=\"this.className=\'sfpg_button_hover\';\" onmouseout=\"this.className=\'sfpg_button\';\" onclick=\"window.location=\''+phpSelf+'?cmd=buy&sfpg='+imgLink[id]+'\'\" class=\"sfpg_button\">".sfpg_str_to_script(TEXT_PAYPAL_BUY)."</span><br><br>';
 							}
 							else
 							{
-								info += '<br><span class=\"sfpg_button_disabled\">".str_to_script(TEXT_PAYPAL_BUY)."</span><br><br>';
+								info += '<br><span class=\"sfpg_button_disabled\">".sfpg_str_to_script(TEXT_PAYPAL_BUY)."</span><br><br>';
 							}
 							info += '</div><br>';
 						}
@@ -1354,45 +1620,45 @@
 					echo"
 					if (typeof splint[10] != 'undefined')
 					{
-						info += '<strong>".str_to_script(TEXT_DESCRIPTION)."</strong><br><div class=\"sfpg_info_text\">';
+						info += '<strong>".sfpg_str_to_script(TEXT_DESCRIPTION)."</strong><br><div class=\"sfpg_info_text\">';
 						info += splint[29]+'<br>';
 						info += '</div><br>';
 
-						info += '<strong>".str_to_script(TEXT_INFO)."</strong><br><div class=\"sfpg_info_text\">';
-						info += '".str_to_script(TEXT_DATE).": '+splint[0]+'<br>';
-						info += '".str_to_script(TEXT_IMAGESIZE).": '+splint[2]+' x '+splint[3]+'<br>';
-						info += '".str_to_script(TEXT_DISPLAYED_IMAGE).": <span id=\"img_size\"></span> (';
+						info += '<strong>".sfpg_str_to_script(TEXT_INFO)."</strong><br><div class=\"sfpg_info_text\">';
+						info += '".sfpg_str_to_script(TEXT_DATE).": '+dateFormat(splint[0])+'<br>';
+						info += '".sfpg_str_to_script(TEXT_IMAGESIZE).": '+splint[2]+' x '+splint[3]+'<br>';
+						info += '".sfpg_str_to_script(TEXT_DISPLAYED_IMAGE).": <span id=\"img_size\"></span> (';
 						if (fullImgLoaded || ".(USE_PREVIEW ? "false" : "true").")
 						{
-							info += '".str_to_script(TEXT_THIS_IS_FULL)."';
+							info += '".sfpg_str_to_script(TEXT_THIS_IS_FULL)."';
 						}
 						else
 						{
-							info += '".str_to_script(TEXT_THIS_IS_PREVIEW)."';
+							info += '".sfpg_str_to_script(TEXT_THIS_IS_PREVIEW)."';
 						}
 						info += ')<br>';
-						info += '".str_to_script(TEXT_SCALED_TO).": <span id=\"img_resize\"></span><br>';
-						info += '".str_to_script(TEXT_FILESIZE).": '+splint[1]+'<br>';
-						info += '".str_to_script(TEXT_IMAGE_NUMBER).": '+id+' / '+(imgLink.length-1)+'<br>';
+						info += '".sfpg_str_to_script(TEXT_SCALED_TO).": <span id=\"img_resize\"></span><br>';
+						info += '".sfpg_str_to_script(TEXT_FILESIZE).": '+splint[1]+'<br>';
+						info += '".sfpg_str_to_script(TEXT_IMAGE_NUMBER).": '+id+' / '+(imgLink.length-1)+'<br>';
 						info += '</div><br>';";
 
 						if (SHOW_EXIF_INFO)
 						{
 							echo"
-							info += '<strong>".str_to_script(TEXT_EXIF)."</strong><br><div class=\"sfpg_info_text\">';
+							info += '<strong>".sfpg_str_to_script(TEXT_EXIF)."</strong><br><div class=\"sfpg_info_text\">';
 							if (splint[4] == 'sfpg_no_exif_data_in_file')
 							{
-								info += '".str_to_script(TEXT_EXIF_MISSING)."';
+								info += '".sfpg_str_to_script(TEXT_EXIF_MISSING)."';
 							}
 							else
 							{
-								info += '".str_to_script(TEXT_EXIF_DATE).": '+splint[4]+'<br>';
-								info += '".str_to_script(TEXT_EXIF_CAMERA).": '+splint[5]+'<br>';
-								info += '".str_to_script(TEXT_EXIF_ISO).": '+splint[6]+'<br>';
-								info += '".str_to_script(TEXT_EXIF_SHUTTER).": '+splint[7]+'<br>';
-								info += '".str_to_script(TEXT_EXIF_APERTURE).": '+splint[8]+'<br>';
-								info += '".str_to_script(TEXT_EXIF_FOCAL).": '+splint[9]+'<br>';
-								info += '".str_to_script(TEXT_EXIF_FLASH).": '+splint[10]+'<br>';
+								info += '".sfpg_str_to_script(TEXT_EXIF_DATE).": '+dateFormat(splint[4])+'<br>';
+								info += '".sfpg_str_to_script(TEXT_EXIF_CAMERA).": '+splint[5]+'<br>';
+								info += '".sfpg_str_to_script(TEXT_EXIF_ISO).": '+splint[6]+'<br>';
+								info += '".sfpg_str_to_script(TEXT_EXIF_SHUTTER).": '+splint[7]+'<br>';
+								info += '".sfpg_str_to_script(TEXT_EXIF_APERTURE).": '+splint[8]+'<br>';
+								info += '".sfpg_str_to_script(TEXT_EXIF_FOCAL).": '+splint[9]+'<br>';
+								info += '".sfpg_str_to_script(TEXT_EXIF_FLASH).": '+splint[10]+'<br>';
 							}
 							info += '</div><br>';";
 						}
@@ -1400,31 +1666,31 @@
 						if (SHOW_IPTC_INFO)
 						{
 							echo"
-							info += '<strong>".str_to_script(TEXT_IPTC)."</strong><br><div class=\"sfpg_info_text\">';
-							if (splint[11] == 'sfpg_no_iptc_data_in_file')
+							info += '<strong>".sfpg_str_to_script(TEXT_IPTC)."</strong><br><div class=\"sfpg_info_text\">';
+							if (splint[11] == 'sfpgnoiptc')
 							{
-								info += '".str_to_script(TEXT_IPTC_MISSING)."';
+								info += '".sfpg_str_to_script(TEXT_IPTC_MISSING)."';
 							}
 							else
 							{
-								info += '".str_to_script(TEXT_IPTC_TITLE).": '+splint[11]+'<br>';
-								info += '".str_to_script(TEXT_IPTC_URGENCY).": '+splint[12]+'<br>';
-								info += '".str_to_script(TEXT_IPTC_CATEGORY).": '+splint[13]+'<br>';
-								info += '".str_to_script(TEXT_IPTC_SUBCATEGORIES).": '+splint[14]+'<br>';
-								info += '".str_to_script(TEXT_IPTC_SPECIALINSTRUCTIONS).": '+splint[15]+'<br>';
-								info += '".str_to_script(TEXT_IPTC_CREATIONDATE).": '+splint[16]+'<br>';
-								info += '".str_to_script(TEXT_IPTC_AUTHORBYLINE).": '+splint[17]+'<br>';
-								info += '".str_to_script(TEXT_IPTC_AUTHORTITLE).": '+splint[18]+'<br>';
-								info += '".str_to_script(TEXT_IPTC_CITY).": '+splint[19]+'<br>';
-								info += '".str_to_script(TEXT_IPTC_STATE).": '+splint[20]+'<br>';
-								info += '".str_to_script(TEXT_IPTC_COUNTRY).": '+splint[21]+'<br>';
-								info += '".str_to_script(TEXT_IPTC_OTR).": '+splint[22]+'<br>';
-								info += '".str_to_script(TEXT_IPTC_HEADLINE).": '+splint[23]+'<br>';
-								info += '".str_to_script(TEXT_IPTC_SOURCE).": '+splint[24]+'<br>';
-								info += '".str_to_script(TEXT_IPTC_PHOTOSOURCE).": '+splint[25]+'<br>';
-								info += '".str_to_script(TEXT_IPTC_COPYRIGHT).": '+splint[26]+'<br>';
-								info += '".str_to_script(TEXT_IPTC_CAPTION).": '+splint[27]+'<br>';
-								info += '".str_to_script(TEXT_IPTC_CAPTIONWRITER).": '+splint[28]+'<br>';
+								info += '".sfpg_str_to_script(TEXT_IPTC_TITLE).": '+splint[11]+'<br>';
+								info += '".sfpg_str_to_script(TEXT_IPTC_URGENCY).": '+splint[12]+'<br>';
+								info += '".sfpg_str_to_script(TEXT_IPTC_CATEGORY).": '+splint[13]+'<br>';
+								info += '".sfpg_str_to_script(TEXT_IPTC_SUBCATEGORIES).": '+splint[14]+'<br>';
+								info += '".sfpg_str_to_script(TEXT_IPTC_SPECIALINSTRUCTIONS).": '+splint[15]+'<br>';
+								info += '".sfpg_str_to_script(TEXT_IPTC_CREATIONDATE).": '+splint[16]+'<br>';
+								info += '".sfpg_str_to_script(TEXT_IPTC_AUTHORBYLINE).": '+splint[17]+'<br>';
+								info += '".sfpg_str_to_script(TEXT_IPTC_AUTHORTITLE).": '+splint[18]+'<br>';
+								info += '".sfpg_str_to_script(TEXT_IPTC_CITY).": '+splint[19]+'<br>';
+								info += '".sfpg_str_to_script(TEXT_IPTC_STATE).": '+splint[20]+'<br>';
+								info += '".sfpg_str_to_script(TEXT_IPTC_COUNTRY).": '+splint[21]+'<br>';
+								info += '".sfpg_str_to_script(TEXT_IPTC_OTR).": '+splint[22]+'<br>';
+								info += '".sfpg_str_to_script(TEXT_IPTC_HEADLINE).": '+splint[23]+'<br>';
+								info += '".sfpg_str_to_script(TEXT_IPTC_SOURCE).": '+splint[24]+'<br>';
+								info += '".sfpg_str_to_script(TEXT_IPTC_PHOTOSOURCE).": '+splint[25]+'<br>';
+								info += '".sfpg_str_to_script(TEXT_IPTC_COPYRIGHT).": '+splint[26]+'<br>';
+								info += '".sfpg_str_to_script(TEXT_IPTC_CAPTION).": '+splint[27]+'<br>';
+								info += '".sfpg_str_to_script(TEXT_IPTC_CAPTIONWRITER).": '+splint[28]+'<br>';
 							}
 							info += '</div><br>';";
 						}
@@ -1432,12 +1698,12 @@
 					}
 					else
 					{
-						info += '<br><strong>".str_to_script(TEXT_FIRST_VIEW)."</strong><br><br><span id=\"img_size\"></span><span id=\"img_resize\"></span><br><br>';
+						info += '<br><strong>".sfpg_str_to_script(TEXT_FIRST_VIEW)."</strong><br><br><span id=\"img_size\"></span><span id=\"img_resize\"></span><br><br>';
 					}
 
-					info += '<strong>".str_to_script(TEXT_LINKS)."</strong><br>';
-					info += '<a href=\"'+phpSelf+'?sfpg='+imgLink[id]+'\">".str_to_script(TEXT_DIRECT_LINK_IMAGE)."</a><br>';
-					".(TEXT_DOWNLOAD ? "info += '<a href=\"'+phpSelf+'?cmd=dl&sfpg='+imgLink[id]+'\">".str_to_script(TEXT_DOWNLOAD)."</a><br><br>';" : "")."
+					info += '<strong>".sfpg_str_to_script(TEXT_LINKS)."</strong><br>';
+					info += '<a href=\"'+phpSelf+'?sfpg='+imgLink[id]+'\">".sfpg_str_to_script(TEXT_DIRECT_LINK_IMAGE)."</a><br>';
+					".(TEXT_DOWNLOAD ? "info += '<a href=\"'+phpSelf+'?cmd=dl&sfpg='+imgLink[id]+'\">".sfpg_str_to_script(TEXT_DOWNLOAD)."</a><br><br>';" : "")."
 				}
 				else if (type == 'file')
 				{
@@ -1447,15 +1713,15 @@
 					}
 					else
 					{
-						info += '<br><br>".str_to_script(TEXT_NO_PREVIEW_FILE)."<br>';
+						info += '<br><br>".sfpg_str_to_script(TEXT_NO_PREVIEW_FILE)."<br>';
 					}
 					info += '</div>';
-					info += '<strong>".str_to_script(TEXT_FILE_NAME)."</strong><br><div class=\"sfpg_info_text\">'+fileName[id]+'</div><br>';
+					info += '<strong>".sfpg_str_to_script(TEXT_FILE_NAME)."</strong><br><div class=\"sfpg_info_text\">'+fileName[id]+'</div><br>';
 					var splint = fileInfo[id].split('|');
-					info += '<strong>".str_to_script(TEXT_DESCRIPTION)."</strong><br><div class=\"sfpg_info_text\">'+splint[2]+'<br></div><br>';
-					info += '<strong>".str_to_script(TEXT_INFO)."</strong><br><div class=\"sfpg_info_text\">';
-					info += '".str_to_script(TEXT_DATE).": '+splint[0]+'<br>';
-					info += '".str_to_script(TEXT_FILESIZE).": '+splint[1]+'<br>';
+					info += '<strong>".sfpg_str_to_script(TEXT_DESCRIPTION)."</strong><br><div class=\"sfpg_info_text\">'+splint[2]+'<br></div><br>';
+					info += '<strong>".sfpg_str_to_script(TEXT_INFO)."</strong><br><div class=\"sfpg_info_text\">';
+					info += '".sfpg_str_to_script(TEXT_DATE).": '+dateFormat(splint[0])+'<br>';
+					info += '".sfpg_str_to_script(TEXT_FILESIZE).": '+splint[1]+'<br>';
 					info += '</div><br>';
 				}
 				document.getElementById('box_inner_info').innerHTML = info;
@@ -1572,7 +1838,7 @@
 			{
 				waitSpinNr = 0;
 			}
-			document.getElementById('wait').innerHTML = '<div class=\"loading\">".str_to_script(TEXT_IMAGE_LOADING)."' + waitSpin[waitSpinNr] + '</div>';
+			document.getElementById('wait').innerHTML = '<div class=\"loading\">".sfpg_str_to_script(TEXT_IMAGE_LOADING)."' + waitSpin[waitSpinNr] + '</div>';
 			waitSpinNr++;
 			if ((stage<3) && index)
 			{
@@ -1587,6 +1853,8 @@
 			document.getElementById('box_wait').style.visibility='hidden';
 			document.getElementById('wait').style.visibility='hidden';
 			document.getElementById('box_image').style.visibility='hidden';
+			document.getElementById('box_left').style.visibility='hidden';
+			document.getElementById('box_right').style.visibility='hidden';
 			index = false;
 			naviOk=true;
 			showMenu();
@@ -1654,20 +1922,191 @@
 		}
 
 
+		function toggleSelect()
+		{
+			if (selecting)
+			{
+				openGallery(0);
+			}
+			else
+			{
+				selecting = true;
+				showMenu();
+			}
+		}
+
+
+		function postSelected()
+		{
+			var selectForm = document.createElement('form');
+			selectForm.setAttribute('method','post');
+			selectForm.setAttribute('id','selectForm');
+			selectForm.setAttribute('action', phpSelf+'?sfpg='+dirLink[0]+(showInfo?'&info=1':''));
+			for (i=0; i<selectedDirs.length; i++)
+			{
+				var inp = document.createElement('input');
+				inp.setAttribute('type','hidden');
+				inp.setAttribute('name','elems[]');
+				inp.setAttribute('value',dirLink[selectedDirs[i]]);
+				selectForm.appendChild(inp);
+			}			
+			for (i=0; i<selectedImages.length; i++)
+			{
+				var inp = document.createElement('input');
+				inp.setAttribute('type','hidden');
+				inp.setAttribute('name','elems[]');
+				inp.setAttribute('value',imgLink[selectedImages[i]]);
+				selectForm.appendChild(inp);
+			}			
+			for (i=0; i<selectedFiles.length; i++)
+			{
+				var inp = document.createElement('input');
+				inp.setAttribute('type','hidden');
+				inp.setAttribute('name','elems[]');
+				inp.setAttribute('value',fileLink[selectedFiles[i]]);
+				selectForm.appendChild(inp);
+			}			
+			document.getElementsByTagName('body')[0].appendChild(selectForm);
+			document.getElementById('selectForm').submit();
+		}
+
+
+		function selectElement(that, arr, nr)
+		{
+			var ele = arr.indexOf(nr);
+			if (ele == -1)
+			{
+				arr.push(nr);
+			}
+			else
+			{
+				arr.splice(ele, 1);
+			}
+		}
+
+
+		function isSelected(type, nr)
+		{
+			if (type == 'dir')
+			{
+				var ele = selectedDirs.indexOf(nr);
+			}
+			else if (type == 'img')
+			{
+				var ele = selectedImages.indexOf(nr);
+			}
+			else if (type == 'file')
+			{
+				var ele = selectedFiles.indexOf(nr);
+			}
+			if (ele == -1)
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+
+
+		function mouseOver(that, type, nr)
+		{
+			fillInfo(type, nr);
+			if (isSelected(type, nr))
+			{
+				that.className='innerbox_marked';
+			}
+			else if (type=='dir')
+			{
+				that.className='innerboxdir_hover';
+			}
+			else if (type=='img')
+			{
+				that.className='innerboximg_hover';
+			}
+			else if (type=='file')
+			{
+				that.className='innerboxfile_hover';
+			}
+		}
+
+
+		function mouseOut(that, type, nr)
+		{
+			fillInfo('dir', 0);
+			if (isSelected(type, nr))
+			{
+				that.className='innerbox_marked';
+			}
+			else if (type=='dir')
+			{
+				that.className='innerboxdir';
+			}
+			else if (type=='img')
+			{
+				that.className='innerboximg';
+			}
+			else if (type=='file')
+			{
+				that.className='innerboxfile';
+			}
+		}
+
+
+		function mouseClick(that, type, nr)
+		{
+			if (selecting)
+			{
+				if (type == 'dir')
+				{
+					selectElement(that, selectedDirs, nr);
+					that.className=(isSelected(type, nr)?'innerbox_marked':'innerboxdir');
+				}
+				else if (type == 'img')
+				{
+					selectElement(that, selectedImages, nr);
+					that.className=(isSelected(type, nr)?'innerbox_marked':'innerboximg');
+				}
+				else if (type == 'file')
+				{
+					selectElement(that, selectedFiles, nr);
+					that.className=(isSelected(type, nr)?'innerbox_marked':'innerboxfile');
+				}
+			}
+			else
+			{
+				if (type == 'dir')
+				{
+					openGallery(nr);
+				}
+				else if (type == 'img')
+				{
+					openImageView(nr, false);
+				}
+				else if (type == 'file')
+				{
+					openFile(nr);
+				}
+			}
+		}
+
+
 		function addElement(elementNumber, type)
 		{
 			var divClassName = 'thumbbox';
 			var content='';
 			if (type == 'dir')
 			{
-				content = '<div onclick=\"openGallery('+elementNumber+')\" onmouseover=\"this.className=\'innerboxdir_hover\'; fillInfo(\'dir\', '+elementNumber+')\" onmouseout=\"this.className=\'innerboxdir\'; fillInfo(\'dir\', 0)\" class=\"innerboxdir\"><div class=\"thumbimgbox\">';
+				content += '<div onclick=\"mouseClick(this, \'dir\', '+elementNumber+')\" onmouseover=\"mouseOver(this, \'dir\', '+elementNumber+')\" onmouseout=\"mouseOut(this, \'dir\', '+elementNumber+')\" class=\"innerboxdir\">';
+				content += '<div class=\"thumbimgbox\">';
 				if (dirThumb[elementNumber] != '')
 				{
 					content += '<img class=\"thumb\" alt=\"\" src=\"'+phpSelf+'?cmd=thumb&sfpg='+dirThumb[elementNumber]+'\">';
 				}
 				else
 				{
-					content += '<br><br>".str_to_script(TEXT_NO_IMAGES)."';
+					content += '<br><br>".sfpg_str_to_script(TEXT_NO_IMAGES)."';
 				}
 				content += '</div>';
 				". (THUMB_CHARS_MAX ? "content += '['+thumbDisplayName(dirName[elementNumber])+']';" : "")."
@@ -1675,20 +2114,22 @@
 			}
 			else if (type == 'img')
 			{
-				content = '<div onclick=\"openImageView('+elementNumber+', false)\" onmouseover=\"this.className=\'innerboximg_hover\'; fillInfo(\'img\', '+elementNumber+')\" onmouseout=\"this.className=\'innerboximg\'; fillInfo(\'dir\', 0)\" class=\"innerboximg\"><div class=\"thumbimgbox\"><img class=\"thumb\" alt=\"\" src=\"'+phpSelf+'?cmd=thumb&sfpg='+imgLink[elementNumber]+'\"></div>';
+				content += '<div onclick=\"mouseClick(this, \'img\', '+elementNumber+')\" onmouseover=\"mouseOver(this, \'img\', '+elementNumber+')\" onmouseout=\"mouseOut(this, \'img\', '+elementNumber+')\" class=\"innerboximg\">';
+				content += '<div class=\"thumbimgbox\"><img class=\"thumb\" alt=\"\" src=\"'+phpSelf+'?cmd=thumb&sfpg='+imgLink[elementNumber]+'\"></div>';
 				". (THUMB_CHARS_MAX ? "content += thumbDisplayName(imgName[elementNumber]);" : "")."
 				content += '</div>';
 			}
 			else if (type == 'file')
 			{
-				content = '<div onclick=\"openFile('+elementNumber+')\" onmouseover=\"this.className=\'innerboxfile_hover\'; fillInfo(\'file\', '+elementNumber+')\" onmouseout=\"this.className=\'innerboxfile\'; fillInfo(\'dir\', 0)\" class=\"innerboxfile\"><div class=\"thumbimgbox\">';
+				content += '<div onclick=\"mouseClick(this, \'file\', '+elementNumber+')\" onmouseover=\"mouseOver(this, \'file\', '+elementNumber+')\" onmouseout=\"mouseOut(this, \'file\', '+elementNumber+')\" class=\"innerboxfile\">';
+				content += '<div class=\"thumbimgbox\">';
 				if (fileThumb[elementNumber] != '')
 				{
 					content += '<img class=\"thumb\" alt=\"\" src=\"'+phpSelf+'?cmd=thumb&sfpg='+fileThumb[elementNumber]+'\">';
 				}
 				else
 				{
-					content += '<br><br>".str_to_script(TEXT_NO_PREVIEW_FILE)."';
+					content += '<br><br>".sfpg_str_to_script(TEXT_NO_PREVIEW_FILE)."';
 				}
 				content += '</div>'; 
 				". (THUMB_CHARS_MAX ? "content += thumbDisplayName(fileName[elementNumber]);" : "")."
@@ -1700,7 +2141,7 @@
 				if ((typeof splint[4] != 'undefined') && (splint[4] != ''))
 				{
 					divClassName = 'descbox';
-					content = '<div class=\"innerboxdesc\">';
+					content += '<div class=\"innerboxdesc\">';
 					content += splint[4];
 					content += '</div>';
 				}
@@ -1813,7 +2254,7 @@
 			";
 		}
 		echo "navLink[1] = '".sfpg_url_string('')."';\n";
-		echo "navName[1] = '".str_to_script(TEXT_HOME)."';\n\n";
+		echo "navName[1] = '".sfpg_str_to_script(TEXT_HOME)."';\n\n";
 		
 		$links = explode("/", GALLERY);
 		$gal_dirs = "";
@@ -1853,26 +2294,26 @@
 				if(($start_link > 0) and ($link_nr == $start_link))
 				{
 					echo "navLink[".$i."] = '';\n";
-					echo "navName[".$i."] = '".str_to_script(" ... ")."';\n\n";
+					echo "navName[".$i."] = '".sfpg_str_to_script(" ... ")."';\n\n";
 					$i++;
 				}
 				else
 				{
 					echo "navLink[".$i."] = '';\n";
-					echo "navName[".$i."] = '".str_to_script(" > ")."';\n\n";
+					echo "navName[".$i."] = '".sfpg_str_to_script(" > ")."';\n\n";
 					$i++;
 				}
 				echo "navLink[".$i."] = '".sfpg_url_string($a_links[$link_nr])."';\n";
-				echo "navName[".$i."] = '".str_to_script($a_names[$link_nr])."';\n\n";
+				echo "navName[".$i."] = '".sfpg_str_to_script($a_names[$link_nr])."';\n\n";
 				$i++;
 			}
 			echo "dirLink[0] = '".sfpg_url_string($a_links[count($a_links)-1])."';\n";
-			echo "dirName[0] = '".str_to_script((count($a_links) == 0 ? TEXT_HOME : $a_names[count($a_links)-1]))."';\n";
+			echo "dirName[0] = '".sfpg_str_to_script((count($a_links) == 0 ? TEXT_HOME : $a_names[count($a_links)-1]))."';\n";
 		}
 		else
 		{
 			echo "dirLink[0] = '".sfpg_url_string("")."';\n";
-			echo "dirName[0] = '".str_to_script(TEXT_HOME)."';\n";
+			echo "dirName[0] = '".sfpg_str_to_script(TEXT_HOME)."';\n";
 		}
 		
 		if (!file_exists(DATA_ROOT."info/".GALLERY."_sfpg_dir"))
@@ -1887,7 +2328,7 @@
 			$filed = explode("|", file_get_contents(DATA_ROOT."info/".GALLERY."_sfpg_dir"));
 		}
 		echo "dirThumb[0] = '".$filed[4]."';\n";
-		echo "dirInfo[0] = '".str_to_script($filed[3]."|".$filed[0]."|".$filed[1]."|".$filed[2]."|".(in_array(DIR_DESC_FILE, $misc)?@file_get_contents(GALLERY_ROOT.GALLERY.DIR_DESC_FILE):""))."';\n\n";
+		echo "dirInfo[0] = '".sfpg_str_to_script($filed[3]."|".$filed[0]."|".$filed[1]."|".$filed[2])."|".(in_array(DIR_DESC_FILE, $misc)?@sfpg_str_to_script(file_get_contents(GALLERY_ROOT.GALLERY.DIR_DESC_FILE), false):"")."';\n\n";
 		
 		$item = 1;
 		foreach ($dirs as $val)
@@ -1901,7 +2342,7 @@
 			{
 				$display_name = sfpg_display_name($val, TRUE);
 			}
-			echo "dirName[".($item)."] = '".str_to_script($display_name)."';\n";
+			echo "dirName[".($item)."] = '".sfpg_str_to_script($display_name)."';\n";
 			echo "dirLink[".($item)."] = '".sfpg_url_string((GALLERY.$val."/"))."';\n";
 			if (!file_exists(DATA_ROOT."info/".GALLERY.$val."/_sfpg_dir"))
 			{
@@ -1909,15 +2350,15 @@
 			}
 			$filed = explode("|", file_get_contents(DATA_ROOT."info/".GALLERY.$val."/_sfpg_dir"));
 			echo "dirThumb[".($item)."] = '".$filed[4]."';\n";
-			echo "dirInfo[".($item)."] = '".str_to_script($filed[3]."|".$filed[0]."|".$filed[1]."|".$filed[2]."|".@file_get_contents(GALLERY_ROOT.GALLERY.$val."/".DIR_DESC_FILE))."';\n\n";
+			echo "dirInfo[".($item)."] = '".sfpg_str_to_script($filed[3]."|".$filed[0]."|".$filed[1]."|".$filed[2])."|".sfpg_str_to_script(@file_get_contents(GALLERY_ROOT.GALLERY.$val."/".DIR_DESC_FILE), false)."';\n\n";
 			$item++;
 		}
 
 		$img_direct_link = FALSE;
-		$showImage = true;
 		$item = 1;
 		foreach ($images as $val)
 		{
+			$showImage = true;
 			if(SHOW_MAX_IMAGES)
 			{
 				if($item>=SHOW_MAX_IMAGES)
@@ -1940,14 +2381,28 @@
 				}
 				echo "imgLink[".($item)."] = '".sfpg_url_string(GALLERY, $val)."';\n";
 				$img_name = sfpg_display_name($val, SHOW_IMAGE_EXT);
-				echo "imgName[".($item)."] = '".str_to_script($img_name)."';\n";
-				echo "imgInfo[".($item)."] = '".str_to_script(@file_get_contents(DATA_ROOT."info/".GALLERY.$val)."|".(in_array($val.DESC_EXT, $misc)?@file_get_contents(GALLERY_ROOT.GALLERY.$val.DESC_EXT):""))."';\n";
+				echo "imgName[".($item)."] = '".sfpg_str_to_script($img_name)."';\n";
+				if (file_exists(DATA_ROOT.'info/'.GALLERY.$val))
+				{
+					$filed=file_get_contents(DATA_ROOT."info/".GALLERY.$val);
+					$filed_exp=explode('|', $filed);
+					if (filemtime(GALLERY_ROOT.GALLERY.$val)!=$filed_exp[0])
+					{
+						sfpg_delete_from_data_root(GALLERY.$val);
+						$filed='';
+					}
+				}
+				else
+				{
+					$filed='';
+				}
+				echo "imgInfo[".($item)."] = '".sfpg_str_to_script($filed)."|".(in_array($val.DESC_EXT, $misc)?sfpg_str_to_script(@file_get_contents(GALLERY_ROOT.GALLERY.$val.DESC_EXT), false):"")."';\n";
 				if (PAYPAL_ENABLED)
 				{
 					$sell=(in_array($val.PAYPAL_EXTENSION,$misc)?@file(GALLERY_ROOT.GALLERY.$val.PAYPAL_EXTENSION,FILE_IGNORE_NEW_LINES):false);
 					if ($sell!=false)
 					{
-						echo "imgSell[".($item)."] = '".str_to_script($sell[0])."|".str_to_script($sell[1])."|".str_to_script($sell[2])."';\n";
+						echo "imgSell[".($item)."] = '".sfpg_str_to_script($sell[0], false, true)."|".sfpg_str_to_script($sell[1], false, true)."|".sfpg_str_to_script($sell[2], false, true)."';\n";
 					}
 				}
 				$item++;
@@ -1961,38 +2416,74 @@
 		{
 			define("IMAGE_ID_IN_URL", FALSE);
 		}
-
-		$item = 1;
-		foreach ($files as $val)
+		
+		if (count($files))
 		{
-			$ext = sfpg_ext($val);
-			echo "fileLink[".($item)."] = '".sfpg_url_string(GALLERY, $val)."';\n";
-			if (FILE_THUMB_EXT and file_exists(GALLERY_ROOT.GALLERY.$val.FILE_THUMB_EXT))
+			$item = 1;
+			$icons=@scandir(GALLERY_ROOT.ICONS_DIR);
+			foreach ($files as $val)
 			{
-				echo "fileThumb[".($item)."] = '".sfpg_url_string(GALLERY, $val.FILE_THUMB_EXT)."';\n";
+				$icon_file = @substr(sfpg_ext($val), 1).FILE_THUMB_EXT;
+				echo "fileLink[".($item)."] = '".sfpg_url_string(GALLERY, $val)."';\n";
+				if (FILE_THUMB_EXT and file_exists(GALLERY_ROOT.GALLERY.$val.FILE_THUMB_EXT))
+				{
+					echo "fileThumb[".($item)."] = '".sfpg_url_string(GALLERY, $val.FILE_THUMB_EXT)."';\n";
+				}
+				elseif (in_array($icon_file, $icons))
+				{
+					echo "fileThumb[".($item)."] = '".sfpg_url_string(ICONS_DIR, $icon_file)."';\n";
+				}
+				elseif (FILE_THUMB_DEFAULT)
+				{
+					echo "fileThumb[".($item)."] = '".sfpg_url_string(ICONS_DIR, FILE_THUMB_DEFAULT)."';\n";
+				}
+				else
+				{
+					echo "fileThumb[".($item)."] = '';\n";
+				}
+				echo "fileName[".($item)."] = '".sfpg_str_to_script(sfpg_display_name($val, SHOW_FILE_EXT))."';\n";
+				if (!file_exists(DATA_ROOT."info/".GALLERY.$val))
+				{
+					$fp = fopen(DATA_ROOT."info/".GALLERY.$val, "w");
+					fwrite($fp, filemtime(GALLERY_ROOT.GALLERY.$val)."|".sfpg_file_size(filesize(GALLERY_ROOT.GALLERY.$val)));
+					fclose($fp);
+				}
+				echo "fileInfo[".($item)."] = '".sfpg_str_to_script(@file_get_contents(DATA_ROOT."info/".GALLERY.$val))."|".(in_array($val.DESC_EXT, $misc)?sfpg_str_to_script(@file_get_contents(GALLERY_ROOT.GALLERY.$val.DESC_EXT), false):"")."';\n\n";
+				$item++;
 			}
-			elseif (isset($file_ext_thumbs[$ext]))
-			{
-				echo "fileThumb[".($item)."] = '".sfpg_url_string(ICONS_DIR, $file_ext_thumbs[$ext])."';\n";
-			}
-			else
-			{
-				echo "fileThumb[".($item)."] = '';\n";
-			}
-			echo "fileName[".($item)."] = '".str_to_script(sfpg_display_name($val, SHOW_FILE_EXT))."';\n";
-			if (!file_exists(DATA_ROOT."info/".GALLERY.$val))
-			{
-				$fp = fopen(DATA_ROOT."info/".GALLERY.$val, "w");
-				fwrite($fp, date(DATE_FORMAT, filemtime(GALLERY_ROOT.GALLERY.$val))."|".sfpg_file_size(filesize(GALLERY_ROOT.GALLERY.$val)));
-				fclose($fp);
-			}
-			echo "fileInfo[".($item)."] = '".str_to_script(@file_get_contents(DATA_ROOT."info/".GALLERY.$val)."|".(in_array($val.DESC_EXT, $misc)?@file_get_contents(GALLERY_ROOT.GALLERY.$val.DESC_EXT):""))."';\n\n";
-			$item++;
 		}
-
 		echo "
 		//-->
 		</script>";
+	}
+
+	if (PASSWORD!=='')
+	{
+		session_start();
+		if (isset($_GET['cmd']) and ($_GET['cmd']=='logout'))
+		{
+			session_unset();
+			header('Location: '.$_SERVER['PHP_SELF']);
+			exit;
+		}
+		if (($_SESSION['sfpg_access']!==TRUE) or ($_SESSION['sfpg_self']!==$_SERVER['PHP_SELF']))
+		{
+			if (isset($_POST['pw']) and ($_POST['pw']===PASSWORD))
+			{
+				$_SESSION['sfpg_access']=TRUE;
+				$_SESSION['sfpg_self']=$_SERVER['PHP_SELF'];
+			}
+			else
+			{
+				echo '<!DOCTYPE html><html><head><meta charset="'.CHARSET.'"><title></title></head><body>'.
+				'<form  name="pf" action="'.$_SERVER['REQUEST_URI'].'" method="post">'.
+				'<input type="password" name="pw" id="pw" autofocus>'.
+				'<input type="submit" name="su" value="'.TEXT_LOGIN.'">'.
+				'</form></body></html>';
+				exit;
+			}
+		}
+		session_write_close();
 	}
 
 	$get_set = FALSE;
@@ -2049,312 +2540,6 @@
 				exit;
 			}
 		}
-
-		if ($_GET['cmd'] == 'css')
-		{
-			header('Content-type: text/css');
-			echo "
-			img
-			{
-				-ms-interpolation-mode : bicubic;
-			}
-
-			body.sfpg
-			{
-				background : $color_body_back;
-				color: $color_body_text;
-				font-family: Arial, Helvetica, sans-serif;
-				font-size: ".FONT_SIZE."px;
-				font-weight: normal;
-				margin:0px;
-				padding:0px;
-				overflow:hidden;
-			}
-
-			body.sfpg a:active, body.sfpg a:link, body.sfpg a:visited, body.sfpg a:focus
-			{
-				color : $color_body_link;
-				text-decoration : none;
-			}
-
-			body.sfpg a:hover
-			{
-				color : $color_body_hover;
-				text-decoration : none;
-			}
-
-			table
-			{
-				font-size: ".FONT_SIZE."px;
-				height:100%;
-				width:100%;
-			}
-
-			table.info td
-			{
-				padding : 10px;
-				vertical-align : top;
-			}
-
-			table.sfpg_disp
-			{
-				text-align : center;
-				padding : 0px;
-			}
-
-			table.sfpg_disp td.menu
-			{
-				background : #000000;
-				border-top : 1px solid #303030;
-				vertical-align : middle;
-				white-space: nowrap;
-			}
-
-			table.sfpg_disp td.navi
-			{
-				height: ".NAV_BAR_HEIGHT."px;
-				background : #202020;
-				border-top : 1px solid #303030;
-				vertical-align : middle;
-				white-space: nowrap;
-			}
-
-			table.sfpg_disp td.mid
-			{
-				vertical-align : middle;
-			}
-
-			.sfpg_info_text, .loading
-			{
-				border-radius:5px;
-				background : #000000;
-				border : 1px solid #606060;
-				color : #aaaaaa;
-				padding : 1px 4px 1px 4px;
-				width : 200px;
-			}
-			
-			.loading
-			{
-				padding : 20px 20px 20px 20px;
-				margin-right: auto;
-				margin-left: auto;
-			}
-			
-			.sfpg_button, .sfpg_button_hover, .sfpg_button_on, .sfpg_button_nav, .sfpg_button_disabled
-			{
-				border-radius:5px;
-				cursor : pointer;
-				background : $color_button_back;
-				border : 1px solid $color_button_border;
-				color : $color_button_text;
-				padding : 0px 5px 0px 5px;
-				margin : 0px 5px 0px 5px;
-				white-space: nowrap;
-			}
-
-			.sfpg_button_hover
-			{
-				background : $color_button_hover;
-				color : $color_button_hover_text;
-			}
-
-			.sfpg_button_on
-			{
-				background : $color_button_on;
-				color : $color_button_text_on;
-			}
-
-			.sfpg_button_disabled
-			{
-				cursor : default;
-				border : 1px solid $color_button_border_off;
-				background : $color_button_back_off;
-				color : $color_button_text_off;
-			}
-
-			.sfpg_button_nav
-			{
-				border : 1px solid #404040;
-				background:#101010;
-				color:#808080;
-			}
-
-			.thumbbox, .descbox
-			{
-				vertical-align : top;
-				display:-moz-inline-stack;
-				display:inline-block;
-				zoom:1;
-				*display:inline;
-				width: ".((2 * (THUMB_BORDER_WIDTH + THUMB_MARGIN + THUMB_BOX_MARGIN)) + THUMB_MAX_WIDTH + 2)."px;
-				height: ".((2 * (THUMB_BORDER_WIDTH + THUMB_MARGIN + THUMB_BOX_MARGIN)) + THUMB_MAX_HEIGHT + 2 + THUMB_BOX_EXTRA_HEIGHT)."px;
-				margin: 0px;
-				padding: 0px;
-			}
-
-			.descbox
-			{
-				width: ".(((2 * (THUMB_BORDER_WIDTH + THUMB_MARGIN + THUMB_BOX_MARGIN)) + THUMB_MAX_WIDTH + 2)*2)."px;
-			}
-
-			.thumbimgbox
-			{
-				width: ".((2 * (THUMB_BORDER_WIDTH + THUMB_MARGIN)) + THUMB_MAX_WIDTH)."px;
-				height: ".((THUMB_BORDER_WIDTH * 2) + THUMB_MARGIN + THUMB_MAX_HEIGHT + 6)."px;
-				margin: 0px; 
-				padding: 0px;
-			}
-			
-			.innerboxdir, .innerboximg, .innerboxfile, .innerboxdir_hover, .innerboximg_hover, .innerboxfile_hover
-			{
-				border-radius:10px;
-				cursor:pointer;
-				margin: ".THUMB_BOX_MARGIN."px;
-				padding: 0px;
-				width: ".((2 * (THUMB_BORDER_WIDTH + THUMB_MARGIN)) + THUMB_MAX_WIDTH + 2)."px;
-				height: ".((2 * (THUMB_BORDER_WIDTH + THUMB_MARGIN)) + THUMB_MAX_HEIGHT + 2 + THUMB_BOX_EXTRA_HEIGHT)."px;
-			}
-
-			.innerboxdesc
-			{
-				text-align : left;
-				overflow:auto;
-				border-radius:10px;
-				margin: ".THUMB_BOX_MARGIN."px;
-				padding: 5px;
-				width: ".(2*(THUMB_BOX_MARGIN+(2 * (THUMB_BORDER_WIDTH + THUMB_MARGIN)) + THUMB_MAX_WIDTH + 2 - 5))."px;
-				height: ".((2 * (THUMB_BORDER_WIDTH + THUMB_MARGIN)) + THUMB_MAX_HEIGHT + 2 + THUMB_BOX_EXTRA_HEIGHT - 10)."px;
-				border: 1px solid $color_desc_box_border;
-				background : $color_desc_box_back;
-				color : $color_desc_box_text;
-			}
-
-			.innerboxdir, .innerboxdir_hover
-			{
-				border: 1px solid $color_dir_box_border;
-				background : $color_dir_box_back;
-				color : $color_dir_box_text;
-			}
-
-			.innerboximg, .innerboximg_hover
-			{
-				border: 1px solid $color_img_box_border;
-				background : $color_img_box_back;
-				color : $color_img_box_text;
-			}
-
-			.innerboxfile, .innerboxfile_hover
-			{
-				border: 1px solid $color_file_box_border;
-				background : $color_file_box_back;
-				color : $color_file_box_text;
-			}
-
-			.innerboxdir_hover
-			{
-				background : $color_dir_hover;
-				color : $color_dir_hover_text;
-			}
-
-			.innerboximg_hover
-			{
-				background : $color_img_hover;
-				color : $color_img_hover_text;
-			}
-
-			.innerboxfile_hover
-			{
-				background : $color_file_hover;
-				color : $color_file_hover_text;
-			}
-
-			.full_image
-			{
-				cursor:pointer;
-				border : ".FULLIMG_BORDER_WIDTH."px solid $color_fullimg_border;
-			}
-
-			.thumb
-			{
-				border-radius:5px;
-				margin: ".THUMB_MARGIN."px ".THUMB_MARGIN."px 5px ".THUMB_MARGIN."px;
-				border : ".THUMB_BORDER_WIDTH."px solid $color_thumb_border;
-			}
-
-			.box_image
-			{
-				position:absolute;
-				bottom:".MENU_BOX_HEIGHT."px;
-				right:0;
-				z-index:1020;
-				overflow:auto;
-				visibility:hidden;
-				text-align : center;
-			}
-
-			.box_wait
-			{
-				position:absolute;
-				bottom:".MENU_BOX_HEIGHT."px;
-				right:0;
-				z-index:1015;
-				overflow:auto;
-				visibility:hidden;
-				text-align : center;
-			}
-
-			.box_navi
-			{
-				position:absolute;
-				bottom:0;
-				left:0;
-				height:".MENU_BOX_HEIGHT."px;
-				width:100%;
-				z-index:1120;
-				overflow:hidden;
-				text-align : center;
-			}
-
-			.box_info
-			{
-				border-radius:10px;
-				position:absolute;
-				top:10px;
-				left:10px;
-				width:".INFO_BOX_WIDTH."px;
-				z-index:1040;
-				visibility:hidden;
-				overflow:auto;
-				border : 1px solid #404040;
-				background: #101010;
-			}
-
-			.box_overlay
-			{
-				position:absolute;
-				bottom:".MENU_BOX_HEIGHT."px;
-				left:0;
-				height:100%;
-				width:100%;
-				z-index:1010;
-				overflow:hidden;
-				visibility:hidden;
-				background:$color_overlay;
-			}
-
-			.box_gallery
-			{
-				text-align:center;
-				position:absolute;
-				top:0;
-				right:0;
-				z-index:1000;
-				overflow:auto;
-			}
-			";
-			exit;
-		}
 	}
 
 	if (PAYPAL_ENABLED)
@@ -2374,13 +2559,368 @@
 		}
 	}
 
+	if (ADMIN===TRUE)
+	{
+		if (isset($_POST["elems"]) and is_array($_POST["elems"]) and (count($_POST["elems"]) > 0))
+		{
+			foreach ($_POST["elems"] as $elem)
+			{
+				$del_elem = sfpg_url_decode($elem);
+				if ($del_elem)
+				{
+					$element=GALLERY_ROOT.$del_elem[0].$del_elem[1];
+					sfpg_delete($element);
+					if (!is_dir($element))
+					{
+						sfpg_delete($element.DESC_EXT);
+						if (sfpg_image_type($element))
+						{
+							sfpg_delete($element.PAYPAL_EXTENSION);
+						}
+						else
+						{
+							sfpg_delete($element.FILE_THUMB_EXT);
+						}
+					}
+				}
+			}
+		}
+	}
+
 	list($dirs, $images, $files, $misc) = sfpg_get_dir(GALLERY);
 
-	echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"><html><head>' .
-	'<link rel="stylesheet" type="text/css" href="'.$_SERVER['PHP_SELF'].'?cmd=css">' .
-	'<meta http-equiv="Content-Type" content="text/html;charset='.CHARSET.'"><title>'.TEXT_GALLERY_NAME.'</title>';
+	echo '<!DOCTYPE html><html><head>'.
+	'<meta charset='.CHARSET.'>'.
+	'<title>'.TEXT_GALLERY_NAME.'</title>'.
+	'<style>'.
+	"
+	img
+	{
+		-ms-interpolation-mode : bicubic;
+	}
+
+	body.sfpg
+	{
+		background : $color_body_back;
+		color: $color_body_text;
+		font-family: Arial, Helvetica, sans-serif;
+		font-size: ".FONT_SIZE."px;
+		font-weight: normal;
+		margin:0px;
+		padding:0px;
+		overflow:hidden;
+	}
+
+	body.sfpg a:active, body.sfpg a:link, body.sfpg a:visited, body.sfpg a:focus
+	{
+		color : $color_body_link;
+		text-decoration : none;
+	}
+
+	body.sfpg a:hover
+	{
+		color : $color_body_hover;
+		text-decoration : none;
+	}
+
+	table
+	{
+		border-spacing: 0px;
+		border-collapse: separate;
+		font-size: ".FONT_SIZE."px;
+		height:100%;
+		width:100%;
+	}
+
+	table.info td
+	{
+		padding : 10px;
+		vertical-align : top;
+	}
+
+	table.sfpg_disp
+	{
+		text-align : center;
+		padding : 0px;
+		cellspacing : 0px;
+	}
+
+	table.sfpg_disp td.menu
+	{
+		background : #000000;
+		border-top : 1px solid #303030;
+		vertical-align : middle;
+		white-space: nowrap;
+	}
+
+	table.sfpg_disp td.navi
+	{
+		height: ".NAV_BAR_HEIGHT."px;
+		background : #202020;
+		border-top : 1px solid #303030;
+		vertical-align : middle;
+		white-space: nowrap;
+	}
+
+	table.sfpg_disp td.mid
+	{
+		vertical-align : middle;
+	}
+
+	.sfpg_info_text, .loading
+	{
+		".(ROUND_CORNERS?'border-radius: '.ROUND_CORNERS.'px;':'')."
+		background : #000000;
+		border : 1px solid #606060;
+		color : #aaaaaa;
+		padding : 1px 4px 1px 4px;
+		width : 200px;
+	}
+	
+	.loading
+	{
+		padding : 20px 20px 20px 20px;
+		margin-right: auto;
+		margin-left: auto;
+	}
+	
+	.sfpg_button, .sfpg_button_hover, .sfpg_button_on, .sfpg_button_nav, .sfpg_button_disabled
+	{
+		".(ROUND_CORNERS?'border-radius: '.ROUND_CORNERS.'px;':'')."
+		cursor : pointer;
+		background : $color_button_back;
+		border : 1px solid $color_button_border;
+		color : $color_button_text;
+		padding : 0px 5px 0px 5px;
+		margin : 0px 5px 0px 5px;
+		white-space: nowrap;
+	}
+
+	.sfpg_button_hover
+	{
+		background : $color_button_hover;
+		color : $color_button_hover_text;
+	}
+
+	.sfpg_button_on
+	{
+		background : $color_button_on;
+		color : $color_button_text_on;
+	}
+
+	.sfpg_button_disabled
+	{
+		cursor : default;
+		border : 1px solid $color_button_border_off;
+		background : $color_button_back_off;
+		color : $color_button_text_off;
+	}
+
+	.sfpg_button_nav
+	{
+		border : 1px solid #404040;
+		background:#101010;
+		color:#808080;
+	}
+
+	.thumbbox, .descbox
+	{
+		vertical-align : top;
+		display:-moz-inline-stack;
+		display:inline-block;
+		zoom:1;
+		*display:inline;
+		width: ".((2 * (THUMB_BORDER_WIDTH + THUMB_MARGIN + THUMB_BOX_MARGIN)) + THUMB_MAX_WIDTH + 2)."px;
+		height: ".((2 * (THUMB_BORDER_WIDTH + THUMB_MARGIN + THUMB_BOX_MARGIN)) + THUMB_MAX_HEIGHT + 2 + THUMB_BOX_EXTRA_HEIGHT)."px;
+		margin: 0px;
+		padding: 0px;
+	}
+
+	.descbox
+	{
+		width: ".(((2 * (THUMB_BORDER_WIDTH + THUMB_MARGIN + THUMB_BOX_MARGIN)) + THUMB_MAX_WIDTH + 2)*2)."px;
+	}
+
+	.thumbimgbox
+	{
+		width: ".((2 * (THUMB_BORDER_WIDTH + THUMB_MARGIN)) + THUMB_MAX_WIDTH)."px;
+		height: ".((THUMB_BORDER_WIDTH * 2) + THUMB_MARGIN + THUMB_MAX_HEIGHT + 6)."px;
+		margin: 0px; 
+		padding: 0px;
+	}
+	
+	.innerboxdir, .innerboximg, .innerboxfile, .innerboxdir_hover, .innerboximg_hover, .innerboxfile_hover, .innerbox_marked
+	{
+		".(ROUND_CORNERS?'border-radius: '.(ROUND_CORNERS*2).'px;':'')."
+		cursor:pointer;
+		margin: ".THUMB_BOX_MARGIN."px;
+		padding: 0px;
+		width: ".((2 * (THUMB_BORDER_WIDTH + THUMB_MARGIN)) + THUMB_MAX_WIDTH + 2)."px;
+		height: ".((2 * (THUMB_BORDER_WIDTH + THUMB_MARGIN)) + THUMB_MAX_HEIGHT + 2 + THUMB_BOX_EXTRA_HEIGHT)."px;
+	}
+
+	.innerboxdesc
+	{
+		text-align : left;
+		overflow:auto;
+		".(ROUND_CORNERS?'border-radius: '.(ROUND_CORNERS*2).'px;':'')."
+		margin: ".THUMB_BOX_MARGIN."px;
+		padding: 5px;
+		width: ".(2*(THUMB_BOX_MARGIN+(2 * (THUMB_BORDER_WIDTH + THUMB_MARGIN)) + THUMB_MAX_WIDTH + 2 - 5))."px;
+		height: ".((2 * (THUMB_BORDER_WIDTH + THUMB_MARGIN)) + THUMB_MAX_HEIGHT + 2 + THUMB_BOX_EXTRA_HEIGHT - 10)."px;
+		border: 1px solid $color_desc_box_border;
+		background : $color_desc_box_back;
+		color : $color_desc_box_text;
+	}
+
+	.innerboxdir, .innerboxdir_hover, .innerbox_marked
+	{
+		border: 1px solid $color_dir_box_border;
+		background : $color_dir_box_back;
+		color : $color_dir_box_text;
+	}
+
+	.innerboximg, .innerboximg_hover
+	{
+		border: 1px solid $color_img_box_border;
+		background : $color_img_box_back;
+		color : $color_img_box_text;
+	}
+
+	.innerboxfile, .innerboxfile_hover
+	{
+		border: 1px solid $color_file_box_border;
+		background : $color_file_box_back;
+		color : $color_file_box_text;
+	}
+
+	.innerboxdir_hover
+	{
+		background : $color_dir_hover;
+		color : $color_dir_hover_text;
+	}
+
+	.innerboximg_hover
+	{
+		background : $color_img_hover;
+		color : $color_img_hover_text;
+	}
+
+	.innerboxfile_hover
+	{
+		background : $color_file_hover;
+		color : $color_file_hover_text;
+	}
+
+	.innerbox_marked
+	{
+		background : $color_marked_back;
+		color : $color_marked_text;
+	}
+
+	.full_image
+	{
+		cursor:pointer;
+		border : ".FULLIMG_BORDER_WIDTH."px solid $color_fullimg_border;
+	}
+
+	.banner
+	{
+		width:100%;
+	}
+
+	.thumb
+	{
+		".(ROUND_CORNERS?'border-radius: '.ROUND_CORNERS.'px;':'')."
+		margin: ".THUMB_MARGIN."px ".THUMB_MARGIN."px 5px ".THUMB_MARGIN."px;
+		border : ".THUMB_BORDER_WIDTH."px solid $color_thumb_border;
+	}
+
+	.box_image
+	{
+		position:absolute;
+		bottom:".MENU_BOX_HEIGHT."px;
+		right:0;
+		z-index:1020;
+		overflow:auto;
+		visibility:hidden;
+		text-align : center;
+	}
+
+	.box_wait
+	{
+		position:absolute;
+		bottom:".MENU_BOX_HEIGHT."px;
+		right:0;
+		z-index:1015;
+		overflow:auto;
+		visibility:hidden;
+		text-align : center;
+	}
+
+	.box_hud
+	{
+		position:absolute;
+		bottom:".(MENU_BOX_HEIGHT+20)."px;
+		right:0;
+		z-index:1200;
+		visibility:hidden;
+		cursor:pointer;
+	}
+
+	.box_navi
+	{
+		position:absolute;
+		bottom:0;
+		left:0;
+		height:".MENU_BOX_HEIGHT."px;
+		width:100%;
+		z-index:1120;
+		overflow:hidden;
+		text-align : center;
+	}
+
+	.box_info
+	{
+		".(ROUND_CORNERS?'border-radius: '.(ROUND_CORNERS*2).'px;':'')."
+		position:absolute;
+		top:10px;
+		left:10px;
+		width:".INFO_BOX_WIDTH."px;
+		z-index:1040;
+		visibility:hidden;
+		overflow:auto;
+		border : 1px solid #404040;
+		background: #101010;
+	}
+
+	.box_overlay
+	{
+		position:absolute;
+		bottom:".MENU_BOX_HEIGHT."px;
+		left:0;
+		height:100%;
+		width:100%;
+		z-index:1010;
+		overflow:hidden;
+		visibility:hidden;
+		background:$color_overlay;
+	}
+
+	.box_gallery
+	{
+		text-align:center;
+		position:absolute;
+		top:0;
+		right:0;
+		z-index:1000;
+		overflow:auto;
+	}
+	".
+	'</style>';
 	sfpg_javascript();
 	echo '</head>';
+
 	if (PAYPAL_ENABLED and $get_set and ($_GET['cmd'] == 'buy') and IMAGE!='')
 	{
 		$sell=@file(GALLERY_ROOT.GALLERY.IMAGE.PAYPAL_EXTENSION,FILE_IGNORE_NEW_LINES);
@@ -2442,7 +2982,7 @@
 	{
 		echo '<body onresize="initDisplay()" onload="showGallery('.(IMAGE_ID_IN_URL?IMAGE_ID_IN_URL:'false').')" class="sfpg">' .
 		'<div id="box_navi" class="box_navi">' .
-			'<table class="sfpg_disp" cellspacing="0">' .
+			'<table class="sfpg_disp">' .
 				'<tr><td class="navi">' .
 					'<div id="navi"></div>' .
 				'</td></tr>' .
@@ -2451,35 +2991,40 @@
 				'</td></tr>' .
 			'</table>' .
 		'</div>' .
-
 		'<div id="box_image" class="box_image">' .
-			'<table class="sfpg_disp" cellspacing="0">' .
+			'<table class="sfpg_disp">' .
 				'<tr><td class="mid">' .
-					'<img alt="" src="" id="full" class="full_image" onclick="closeImageView()">' .
+					'<img alt="" src="" id="full" class="full_image" onclick="closeImageView()" onmouseover="document.getElementById(\'button_close\').className=\'sfpg_button_hover\'" onmouseout="document.getElementById(\'button_close\').className=\'sfpg_button\'">' .
 				'</td></tr>' .
 			'</table>' .
 		'</div>' .
-
 		'<div id="box_wait" class="box_wait">' .
-			'<table class="sfpg_disp" cellspacing="0">' .
+			'<table class="sfpg_disp">' .
 				'<tr><td class="mid">' .
 					'<div id="wait"></div>' .
 				'</td></tr>' .
 			'</table>' .
 		'</div>' .
-
 		'<div id="box_info" class="box_info">' .
-			'<table class="info" cellspacing="0">' .
+			'<table class="info">' .
 				'<tr><td>' .
 					'<div id="box_inner_info"></div>' .
 				'</td></tr>' .
 			'</table>' .
 		'</div>' .
-
-		'<div id="box_gallery" class="box_gallery"></div>' .
-
+		'<div id="box_gallery" class="box_gallery">';
+		if (DIR_BANNER_FILE and (file_exists(GALLERY_ROOT.GALLERY.DIR_BANNER_FILE)))
+		{
+			echo '<div class="banner">'.@file_get_contents(GALLERY_ROOT.GALLERY.DIR_BANNER_FILE).'</div>';
+		}
+		elseif (TEXT_BANNER)
+		{
+			echo '<div class="banner">'.TEXT_BANNER.'</div>';
+		}
+		echo '</div>' .
 		'<div id="box_overlay" class="box_overlay"></div>' .
-
+		'<div id="box_left" onclick="cycleImg(-1)" onmouseover="document.getElementById(\'button_left\').className=\'sfpg_button_hover\'" onmouseout="document.getElementById(\'button_left\').className=\'sfpg_button\'" class="box_hud"></div>' .
+		'<div id="box_right" onclick="cycleImg(1)" onmouseover="document.getElementById(\'button_right\').className=\'sfpg_button_hover\'" onmouseout="document.getElementById(\'button_right\').className=\'sfpg_button\'" class="box_hud"></div>' .
 		'</body>';
 	}
 	echo '</html>';
