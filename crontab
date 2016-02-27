@@ -1,0 +1,6 @@
+* * * * * flock  -n lock_file -c "rsync -av /run/cam/cam/ login@hangar-lkcm.rhcloud.com:~/app-root/data/plocha/; rsync -av /run/cam/_sfpg_data/thumb/cam/ login@hangar-lkcm.rhcloud.com:~/app-root/data/_sfpg_data/thumb/"
+* * * * * sleep 20 && lftp -c "open -u akmedlanky,cirous74 192.168.1.1; put -O Letiste/Webkamera/ /run/plocha.jpg"
+* * * * * find /run/cam/cam/ -mmin +15 -delete
+0 * * * * find /run/cam/_sfpg_data/thumb/cam -mmin +60 -delete
+* * * * * sleep 40 && killall -9 lftp
+
