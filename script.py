@@ -3,6 +3,7 @@ import os, sys, time, requests, pytz
 from subprocess import call
 from datetime import datetime
 from glob import glob
+from requests.exceptions import *
  
 shot_in_sec = [0]
 brn_lat = '49.2000'
@@ -38,8 +39,15 @@ lt = get_localized_time_now(brn_tz)
 path = sys.argv[1] 
 full_path = path + '/' + datetime.strftime(lt, "%Y-%m-%d-%H:00")
 
-r = get_sun(brn_lat, brn_lon)
-cam_on, cam_off = get_cam_on_off(r)
+try:
+    r = get_sun(brn_lat, brn_lon)
+except ConnectionError:
+    time_now = get_localized_time_now(utc_tz)
+    cam_on = time_now.replace(hour=3, minute=0, second=0, microsecond=0)
+    cam_off = time_now.replace(hour=20, minute=0, second=0, microsecond=0)
+else:
+    cam_on, cam_off = get_cam_on_off(r)
+
 sun_updated = False
      
 while(True):
