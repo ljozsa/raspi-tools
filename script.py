@@ -50,10 +50,10 @@ while(True):
             if not os.path.exists(full_path):
                 os.makedirs(full_path)
             precise_time = datetime.strftime(lt, "%Y-%m-%d-%H:%M:%S")
-            call(["/usr/bin/raspistill", "-w", "720", "-h", "540", "-vf", "-hf",
+            call(["/usr/bin/raspistill", "-w", "1280", "-h", "960", "-vf", "-hf",
     "-o", full_path + "/" + precise_time + ".jpg"])
             call(["/usr/local/bin/epeg", "-w", "640", "-h", "480", "-q", "90",
-    full_path + '/' + precise_time + ".jpg", "/tmp/hangar.jpg"])
+    full_path + '/' + precise_time + ".jpg", "/run/hangar.jpg"])
             spl = path.split('/')
             if spl[-1] == '':
                 spl.pop()
@@ -77,10 +77,10 @@ while(True):
             call(["/usr/bin/convert", "-size", "160x120", "canvas:none",
              "-undercolor", "black", "-pointsize", "9", "-fill", "white",
              "-gravity", "NorthEast", "-annotate", "0", precise_time,
-             "/tmp/canvas.gif" ])
+             "/run/canvas.gif" ])
 
             # join canvas and image thumbnail
-            call(["/usr/bin/composite", "/tmp/canvas.gif", "/run/temp.jpg",
+            call(["/usr/bin/composite", "/run/canvas.gif", "/run/temp.jpg",
              "/".join(spl) + "/" + precise_time + ".jpg" ])
             base_path = path
             base_path = path.rstrip('/').split('/')
