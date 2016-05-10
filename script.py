@@ -11,7 +11,11 @@ brn_tz = pytz.timezone('Europe/Prague')
 utc_tz = pytz.timezone('UTC')
 
 def get_sun(lat, lon):
-    return requests.get('http://api.sunrise-sunset.org/json?lat=' + lat + '&lng=' + lon + '=&formatted=0')
+    try:
+        r = requests.get('http://api.sunrise-sunset.org/json?lat=' + lat + '&lng=' + lon + '=&formatted=0')
+    except:
+        r = None
+    return r
 
 def get_localized_time(time, tz): #time in format '%Y-%m-%dT%H:%M:%S+00:00'
     time_naive = datetime.strptime(time, '%Y-%m-%dT%H:%M:%S+00:00')
@@ -22,15 +26,20 @@ def get_localized_time_now(tz):
 
 
 def get_cam_on_off(request):
-    if r.json()['status'] == 'OK':
-        civil_twilight_begin = r.json()['results']['civil_twilight_begin']
-        civil_twilight_end = r.json()['results']['civil_twilight_end']
-        cam_on = get_localized_time(civil_twilight_begin, utc_tz)
-        cam_off = get_localized_time(civil_twilight_end, utc_tz)
-    else:
-	time_now = get_localized_time_now(utc_tz)
-        cam_on = time_now.replace(hour=3, minute=0, second=0, microsecond=0)
-        cam_off = time_now.replace(hour=20, minute=0, second=0, microsecond=0)
+    try:
+        if r.json()['status'] == 'OK':
+            civil_twilight_begin = r.json()['results']['civil_twilight_begin']
+            civil_twilight_end = r.json()['results']['civil_twilight_end']
+            cam_on = get_localized_time(civil_twilight_begin, utc_tz)
+            cam_off = get_localized_time(civil_twilight_end, utc_tz)
+        else:
+            time_now = get_localized_time_now(utc_tz)
+            cam_on = time_now.replace(hour=3, minute=0, second=0, microsecond=0)
+            cam_off = time_now.replace(hour=20, minute=0, second=0, microsecond=0)
+    except:
+            time_now = get_localized_time_now(utc_tz)
+            cam_on = time_now.replace(hour=3, minute=0, second=0, microsecond=0)
+            cam_off = time_now.replace(hour=20, minute=0, second=0, microsecond=0)
     return cam_on, cam_off
 
 time.sleep(20)  # allow chrony to sync
