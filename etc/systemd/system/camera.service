@@ -1,10 +1,10 @@
 [Unit]
 Description=raspi camera
-After=network.target
-Requires=network.target
+After=time-systemd-timesyncd.target
 
 [Service]
-ExecStart=/root/raspi-tools/script.py /run/user/root
+ExecStartPre=/bin/mkdir -p /run/cam/cam
+ExecStart=/root/raspi-tools/script.py /run/cam/cam
 
 [Install]
 WantedBy=multi-user.target
