@@ -106,7 +106,7 @@ while(True):
 
             # create animated gif and place it to the galery root
             jpeg_list = glob("/".join(spl) + "/*.jpg")
-            jpeg_list.append(full_path + "/_dir.gif")
+#            jpeg_list.append(full_path + "/_dir.gif")
             jpeg_list.insert(0,"/usr/bin/convert")
             call(jpeg_list)
 
