@@ -67,7 +67,7 @@ while(True):
             if not os.path.exists(full_path):
                 os.makedirs(full_path)
             precise_time = datetime.strftime(lt, "%Y-%m-%d-%H:%M:%S")
-            call(["/usr/bin/raspistill", "-w", "720", "-h", "540", "-vf", "-hf",
+            call(["/usr/bin/raspistill", "-w", "720", "-h", "540", 
     "-o", full_path + "/" + precise_time + ".jpg"])
             call(["/usr/local/bin/epeg", "-w", "640", "-h", "480", "-q", "90",
     full_path + '/' + precise_time + ".jpg", "/tmp/hangar.jpg"])
