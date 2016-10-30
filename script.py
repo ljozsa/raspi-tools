@@ -70,7 +70,7 @@ while(True):
             call(["/usr/bin/raspistill", "-w", "1280", "-h", "960", "-vf", "-hf",
     "-o", full_path + "/" + precise_time + ".jpg"])
             call(["/usr/local/bin/epeg", "-w", "640", "-h", "480", "-q", "90",
-    full_path + '/' + precise_time + ".jpg", "/run/hangar.jpg"])
+    full_path + '/' + precise_time + ".jpg", "/run/plocha.jpg"])
             spl = path.split('/')
             if spl[-1] == '':
                 spl.pop()
