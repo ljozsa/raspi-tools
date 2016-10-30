@@ -70,7 +70,7 @@ while(True):
             call(["/usr/bin/raspistill", "-w", "720", "-h", "540", 
     "-o", full_path + "/" + precise_time + ".jpg"])
             call(["/usr/local/bin/epeg", "-w", "640", "-h", "480", "-q", "90",
-    full_path + '/' + precise_time + ".jpg", "/tmp/hangar.jpg"])
+    full_path + '/' + precise_time + ".jpg", "/tmp/hangar2.jpg"])
             spl = path.split('/')
             if spl[-1] == '':
                 spl.pop()
@@ -90,25 +90,25 @@ while(True):
             call(["/usr/local/bin/epeg", "-w", "160", "-h", "120", "-q", "75",
     full_path + '/' + precise_time + ".jpg", "/run/hangar2.jpg"])
 
-#            # create transparent canvas and add time there
-#            call(["/usr/bin/convert", "-size", "160x120", "canvas:none",
-#             "-undercolor", "black", "-pointsize", "9", "-fill", "white",
-#             "-gravity", "NorthEast", "-annotate", "0", precise_time,
-#             "/tmp/canvas.gif" ])
-#
-#            # join canvas and image thumbnail
-#            call(["/usr/bin/composite", "/tmp/canvas.gif", "/run/temp.jpg",
-#             "/".join(spl) + "/" + precise_time + ".jpg" ])
-#            base_path = path
-#            base_path = path.rstrip('/').split('/')
-#            base_path.pop()
-#            call(["/bin/chown", "-R", "www-data.www-data", "/".join(base_path)])
-#
-#            # create animated gif and place it to the galery root
-#            jpeg_list = glob("/".join(spl) + "/*.jpg")
+            # create transparent canvas and add time there
+            call(["/usr/bin/convert", "-size", "160x120", "canvas:none",
+             "-undercolor", "black", "-pointsize", "9", "-fill", "white",
+             "-gravity", "NorthEast", "-annotate", "0", precise_time,
+             "/tmp/canvas.gif" ])
+
+            # join canvas and image thumbnail
+            call(["/usr/bin/composite", "/tmp/canvas.gif", "/run/hangar2.jpg",
+             "/".join(spl) + "/" + precise_time + ".jpg" ])
+            base_path = path
+            base_path = path.rstrip('/').split('/')
+            base_path.pop()
+            call(["/bin/chown", "-R", "www-data.www-data", "/".join(base_path)])
+
+            # create animated gif and place it to the galery root
+            jpeg_list = glob("/".join(spl) + "/*.jpg")
 #            jpeg_list.append(full_path + "/_dir.gif")
-#            jpeg_list.insert(0,"/usr/bin/convert")
-#            call(jpeg_list)
+            jpeg_list.insert(0,"/usr/bin/convert")
+            call(jpeg_list)
 
     time.sleep(1)
     if lt.hour == 3 and lt.minute == 0 and sun_updated == False:
