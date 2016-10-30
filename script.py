@@ -88,7 +88,7 @@ while(True):
                 os.makedirs("/".join(spl))
 
             call(["/usr/local/bin/epeg", "-w", "160", "-h", "120", "-q", "75",
-    full_path + '/' + precise_time + ".jpg", "/run/temp.jpg"])
+    full_path + '/' + precise_time + ".jpg", "/run/hangar2.jpg"])
 
 #            # create transparent canvas and add time there
 #            call(["/usr/bin/convert", "-size", "160x120", "canvas:none",
