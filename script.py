@@ -5,7 +5,7 @@ from datetime import datetime
 from glob import glob
 from requests.exceptions import *
  
-shot_in_sec = [0]
+shot_in_sec = [0, 30]
 brn_lat = '49.2000'
 brn_lon = '16.6167'
 brn_tz = pytz.timezone('Europe/Prague')
@@ -104,11 +104,11 @@ while(True):
             base_path.pop()
             call(["/bin/chown", "-R", "www-data.www-data", "/".join(base_path)])
 
-            # create animated gif and place it to the galery root
-            jpeg_list = glob("/".join(spl) + "/*.jpg")
+#            # create animated gif and place it to the galery root
+#            jpeg_list = glob("/".join(spl) + "/*.jpg")
 #            jpeg_list.append(full_path + "/_dir.gif")
-            jpeg_list.insert(0,"/usr/bin/convert")
-            call(jpeg_list)
+#            jpeg_list.insert(0,"/usr/bin/convert")
+#            call(jpeg_list)
 
     time.sleep(1)
     if lt.hour == 3 and lt.minute == 0 and sun_updated == False:
