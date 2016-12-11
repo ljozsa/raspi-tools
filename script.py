@@ -6,7 +6,7 @@ import piwigo
 time.sleep(20)
 shot_in_sec = [0, 30]
 lt = time.localtime()
-path = /run/
+path = '/run/'
 mysite = piwigo.Piwigo('http://piwigo.lkcm.eu')
 user = 'ljozsa'
 passwd = ''
@@ -43,7 +43,8 @@ while(True):
 
         call(["/usr/bin/raspistill", "-w", "720", "-h", "540",
             "-o", path + "pic.jpg"])
-        mysite.pwg.images.uploadSimple(category=res, name=\
-            time.strftime("%Y-%m-%d-%H:%M:%S", lt))
+        mysite.pwg.images.addSimple(category=res, name=\
+            time.strftime("%Y-%m-%d-%H:%M:%S", lt),
+            image=path + "pic.jpg")
 
     time.sleep(1)
