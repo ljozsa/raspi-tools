@@ -1,50 +1,49 @@
 #!/usr/bin/python
 import os, sys, time
 from subprocess import call
+import piwigo
  
 time.sleep(20)
 shot_in_sec = [0, 30]
 lt = time.localtime()
-path = sys.argv[1] 
-full_path = path + '/' + time.strftime("%Y-%m-%d-%H:00", lt)
-if not os.path.exists(full_path):
-    os.makedirs(full_path)
-     
+path = /run/
+mysite = piwigo.Piwigo('http://piwigo.lkcm.eu')
+user = 'ljozsa'
+passwd = ''
+mysite.pwg.session.login(username=user, password=passwd)
+cam_name = 'hangar2'    
+
+def get_cat_id(name,cat_id=None):
+    for cat in mysite.pwg.categories.getList(cat_id=cat_id)['categories']:
+        if cat['name'] == name:
+            return cat['id']
+
+root_id = get_cat_id(cam_name)
+if not root_id:
+    root_id = mysite.pwg.categories.add(name=cam_name)['id']
+
+album_names = [cat['name'] for cat in \
+ mysite.pwg.categories.getList(cat_id=root_id)['categories']]
+
 while(True):
     lt = time.localtime()
     if lt.tm_sec in shot_in_sec:
         if lt.tm_min == 0 and lt.tm_sec == 0:
-            full_path = path + '/' + time.strftime("%Y-%m-%d-%H:%M", lt) 
-            if not os.path.exists(full_path):
-                os.makedirs(full_path)
-        precise_time = time.strftime("%Y-%m-%d-%H:%M:%S", lt)
-        call(["/usr/bin/raspistill", "-w", "720", "-h", "540",
-"-o", full_path + "/" + precise_time + ".jpg"])
-        spl = path.split('/')
-        if spl[-1] == '':
-            spl.pop()
-            append_blank = True
+            album_names = [cat['name'] for cat in \
+                mysite.pwg.categories.getList(cat_id=root_id)['categories']]
+            if time.strftime("%Y-%m-%d-%H:00", lt) not in album_names:
+                res = mysite.pwg.categories.add(\
+                 name=time.strftime("%Y-%m-%d-%H:00", lt),parent=root_id)['id']
+        # if ran for the first time
+        if time.strftime("%Y-%m-%d-%H:00", lt) not in album_names: 
+            res = mysite.pwg.categories.add(\
+                 name=time.strftime("%Y-%m-%d-%H:00", lt),parent=root_id)['id']
         else:
-            append_blank = False
-        last = spl.pop()
-        spl.extend(('_sfpg_data', 'thumb', last, 
-time.strftime("%Y-%m-%d-%H:00", lt)))
+            res = get_cat_id(time.strftime("%Y-%m-%d-%H:00", lt),root_id)
 
-        if append_blank == True:
-            spl.append('')
+        call(["/usr/bin/raspistill", "-w", "720", "-h", "540",
+            "-o", path + "pic.jpg"])
+        mysite.pwg.images.uploadSimple(category=res, name=\
+            time.strftime("%Y-%m-%d-%H:%M:%S", lt))
 
-        if not os.path.exists("/".join(spl)):
-            os.makedirs("/".join(spl))
-
-        call(["/usr/local/bin/epeg", "-w", "160", "-h", "120", "-q", "75",
-full_path + '/' + precise_time + ".jpg", "/run/temp.jpg"])
-        call(["/usr/bin/convert", "/run/temp.jpg", "-pointsize", "9", "-fill",
-"white", "-annotate", "+0+120", precise_time, "/".join(spl) + "/" +
-precise_time + ".jpg" ])
-        base_path = path
-        base_path = path.rstrip('/').split('/')
-        base_path.pop()
-        call(["/bin/chown", "-R", "www-data.www-data", "/".join(base_path)])
-
-        time.sleep(1)
-
+    time.sleep(1)
